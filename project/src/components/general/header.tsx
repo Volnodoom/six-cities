@@ -1,15 +1,21 @@
-function Header(): JSX.Element {
+type HeaderProps = {
+  logo?: boolean;
+  mainPage?: boolean;
+}
+
+function Header(props: HeaderProps): JSX.Element {
+  const {logo, mainPage} = props;
+
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
-
           <div className="header__left">
-            <a href="/" className="header__logo-link header__logo-link--active">
+            <a href="#nowhere" className={mainPage? 'header__logo-link header__logo-link--active' : 'header__logo-link'}>
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
             </a>
           </div>
-
+          {!logo &&
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
@@ -25,8 +31,7 @@ function Header(): JSX.Element {
                 </a>
               </li>
             </ul>
-          </nav>
-
+          </nav>}
         </div>
       </div>
     </header>

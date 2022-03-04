@@ -5,11 +5,12 @@ import Header from '../general/header';
 function Main (): JSX.Element {
   return(
     <div className="page page--gray page--main">
-      <Header/>
+      <Header mainPage/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <MainTabs />
         <div className="cities">
+          {/* place for the logic of main-no-card it should replace the follow div*/}
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
