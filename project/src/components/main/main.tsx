@@ -1,5 +1,5 @@
 import MainTabs from './main-tabs';
-import MainCard from './main-card';
+import HotelCard from '../general/hotel-card';
 import Header from '../general/header';
 
 function Main (): JSX.Element {
@@ -30,7 +30,7 @@ function Main (): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <MainCard />
+              <HotelCard isMainPage/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

@@ -1,10 +1,15 @@
-function MaiCard (): JSX.Element {
+type HotelCardProps = {
+  isMainPage?: boolean;
+};
+
+function HotelCard (props: HotelCardProps): JSX.Element {
+  const {isMainPage}=props;
   return(
-    <article className="cities__place-card place-card">
+    <article className={`${isMainPage ? 'cities__place-card' : 'near-places__card'} place-card`}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${isMainPage ? 'cities__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`}>
         <a href="/">
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place" />
         </a>
@@ -37,4 +42,4 @@ function MaiCard (): JSX.Element {
   );
 }
 
-export default MaiCard;
+export default HotelCard;
