@@ -1,3 +1,4 @@
+import { PlaceCard } from '../const/const';
 import Header from '../general/header';
 import HotelCard from '../general/hotel-card';
 import PropertyCommentForm from './property-comment-form';
@@ -116,7 +117,7 @@ function Property (): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <HotelCard/>
+              <HotelCard cardKind={PlaceCard.Property}/>
             </div>
           </section>
 

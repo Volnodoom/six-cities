@@ -1,6 +1,7 @@
 import MainTabs from './main-tabs';
 import HotelCard from '../general/hotel-card';
 import Header from '../general/header';
+import { PlaceCard } from '../const/const';
 
 function Main (): JSX.Element {
   return(
@@ -30,7 +31,7 @@ function Main (): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <HotelCard isMainPage/>
+              <HotelCard cardKind={PlaceCard.Main}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

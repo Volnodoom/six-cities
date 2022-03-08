@@ -20,3 +20,9 @@ export const HOTEL_RATING = [
     stringValue: 'Perfect',
   },
 ] as const;
+
+export enum PlaceCard {
+  Main = 'MAIN',
+  Property = 'PROPERTY',
+  Favorites = 'FAVORITES',
+}

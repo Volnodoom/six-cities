@@ -1,20 +1,40 @@
-type HotelCardProps = {
-  isMainPage?: boolean;
-};
+import { PlaceCard } from '../const/const';
 
-function HotelCard (props: HotelCardProps): JSX.Element {
-  const {isMainPage}=props;
+function HotelCard (props: {cardKind: PlaceCard}): JSX.Element {
+  const {cardKind}=props;
+
+  let articleClassName = '';
+  let divClassName = '';
+  let imgParameters: number[] = [];
+
+  switch (cardKind) {
+    case PlaceCard.Main:
+      articleClassName = 'cities__place-card';
+      divClassName = 'cities__image-wrapper';
+      imgParameters = [260, 200];
+      break;
+    case PlaceCard.Property:
+      articleClassName = 'near-places__card';
+      divClassName = 'near-places__image-wrapper';
+      imgParameters = [260, 200];
+      break;
+    case PlaceCard.Favorites:
+      articleClassName = 'favorites__card';
+      divClassName = 'favorites__image-wrapper';
+      imgParameters = [150, 110];
+      break;
+  }
+
+
   return(
-    <article className={`${isMainPage ? 'cities__place-card' : 'near-places__card'} place-card`}>
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-      <div className={`${isMainPage ? 'cities__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`}>
+    <article className={`${articleClassName} place-card`}>
+      {cardKind === PlaceCard.Main ? <div className="place-card__mark"><span>Premium</span></div> : ''}
+      <div className={`${divClassName} place-card__image-wrapper`}>
         <a href="/">
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place" />
+          <img className="place-card__image" src="img/apartment-01.jpg" width={imgParameters[0]} height={imgParameters[1]} alt="Place" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={cardKind === PlaceCard.Favorites ? 'favorites__card-info' : 'place-card__info'}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;120</b>
