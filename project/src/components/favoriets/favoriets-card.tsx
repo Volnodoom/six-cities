@@ -1,4 +1,4 @@
-import { PlaceCard } from '../const/const';
+import { PlaceCard } from '../../const';
 import HotelCard from '../general/hotel-card';
 
 function FavoritesCard (): JSX.Element {

@@ -1,3 +1,11 @@
+export const AppRoutes = {
+  Login: '/login',
+  Root: '/',
+  Favorites: '/favorites',
+  Property: (id:number) => `/offer/:${id}`,
+  Plug: '#nowhere',
+} as const;
+
 export const HOTEL_RATING = [
   {
     value: 1,
@@ -25,4 +33,10 @@ export enum PlaceCard {
   Main = 'MAIN',
   Property = 'PROPERTY',
   Favorites = 'FAVORITES',
+}
+
+export enum LogoPosition {
+  Header = 'HEADER',
+  Footer = 'FOOTER',
+  MainComponent = 'MAIN_COMPONENT',
 }

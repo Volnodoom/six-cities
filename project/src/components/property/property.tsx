@@ -1,4 +1,4 @@
-import { PlaceCard } from '../const/const';
+import { PlaceCard } from '../../const';
 import Header from '../general/header';
 import HotelCard from '../general/hotel-card';
 import PropertyCommentForm from './property-comment-form';

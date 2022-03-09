@@ -1,4 +1,4 @@
-import { HOTEL_RATING } from '../const/const';
+import { HOTEL_RATING } from '../../const';
 import CommentRating from './comment-rating';
 
 function PropertyCommentForm (): JSX.Element {

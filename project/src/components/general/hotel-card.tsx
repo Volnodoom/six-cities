@@ -1,4 +1,4 @@
-import { PlaceCard } from '../const/const';
+import { PlaceCard } from '../../const';
 
 function HotelCard (props: {cardKind: PlaceCard}): JSX.Element {
   const {cardKind}=props;
