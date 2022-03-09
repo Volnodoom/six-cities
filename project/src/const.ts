@@ -40,3 +40,9 @@ export enum LogoPosition {
   Footer = 'FOOTER',
   MainComponent = 'MAIN_COMPONENT',
 }
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_Auth',
+  Unknown = 'UNKNOWN',
+}

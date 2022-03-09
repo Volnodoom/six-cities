@@ -3,12 +3,13 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import { AppRoutes } from '../../const';
+import { AppRoutes, AuthorizationStatus } from '../../const';
 import Favorites from '../favoriets/favorites';
 import Login from '../login/login';
 import Main from '../main/main';
 import Property from '../property/property';
 import NotAvailablePage from '../routing/not-available-page';
+import PrivateRoute from '../routing/private-route';
 
 function App (): JSX.Element {
   return (
@@ -28,7 +29,11 @@ function App (): JSX.Element {
         />
         <Route
           path={AppRoutes.Favorites}
-          element={<Favorites/>}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <Favorites/>
+            </PrivateRoute>
+          }
         />
         <Route
           path="*"
