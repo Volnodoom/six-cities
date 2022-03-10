@@ -4,7 +4,7 @@ import {
   Route
 } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
-import Favorites from '../favoriets/favorites';
+import Favorites from '../favorites/favorites';
 import Login from '../login/login';
 import Main from '../main/main';
 import Property from '../property/property';
