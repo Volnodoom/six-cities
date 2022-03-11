@@ -1,4 +1,4 @@
-export type hotelInfo = {
+export type HotelInfo = {
   id:number,
   city: {
     name: string,
@@ -38,3 +38,19 @@ export type hotelInfo = {
     name: string,
   },
 };
+
+export type SingleComment = {
+  id: number,
+  comment: string,
+  date: Date,
+  rating: number,
+  user: {
+    // avatar_url => avatarImg
+    avatarImg: string,
+    id: number,
+    // is_pro => isPro
+    isPro: boolean,
+    name: string,
+  },
+};
+

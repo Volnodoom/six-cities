@@ -74,7 +74,7 @@ const titles = [
   'Not the Sharpest Tool in the Shed',
 ];
 
-const names = [
+export const names = [
   'Sharron Leon',
   'Janis York',
   'Ursula Osborne',
@@ -85,7 +85,16 @@ const names = [
   'Alberto Suarez',
   'Lindy Fletcher',
   'Jarred Russell',
-
+  'Terra Wheeler',
+  'Hans Flowers',
+  'Twila Hickman',
+  'Houston Brennan',
+  'Jerrold Waters',
+  'Hassan Martin',
+  'Frank Saunders',
+  'Carmela Frederick',
+  'Greta Henry',
+  'Dale Jackson',
 ];
 
 export const hotelInfo = {
