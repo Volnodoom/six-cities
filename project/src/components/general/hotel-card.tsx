@@ -66,7 +66,7 @@ function HotelCard (props: {cardKind: PlaceCard; accommodationInfo: SingleOffer}
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={AppRoutes.Property(id)}>{title}</Link>
         </h2>
         <p className="place-card__type">{accommodationType}</p>
       </div>

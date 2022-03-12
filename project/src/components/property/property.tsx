@@ -52,7 +52,7 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
               {propertyPhotos
                 .slice()
                 .splice(0, LIMITED_NUMBER_OF_PHOTOS)
-                .map((line) => <PropertyImg urlImg={line} key={`${line}-${new Date()}`}/>)}
+                .map((line) => <PropertyImg urlImg={line} key={`${line}-${Date.parse(String(new Date()))}`}/>)}
             </div>
           </div>
 
@@ -98,7 +98,7 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((item) => <li className="property__inside-item" key={`${item}-${new Date()}`}>{item}</li>)}
+                  {goods.map((item) => <li className="property__inside-item" key={`${item}-${Date.parse(String(new Date()))}`}>{item}</li>)}
                 </ul>
               </div>
 
