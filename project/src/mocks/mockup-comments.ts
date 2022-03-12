@@ -1,6 +1,7 @@
+import { SingleReview } from '../types/types';
 import { names } from './mockup-hotel';
 
-const getRandomInteger = (a:number, b:number):number => {
+export const getRandomInteger = (a:number, b:number):number => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   return Math.floor(lower + Math.random() * (upper - lower + 1));
@@ -26,15 +27,15 @@ const comments = [
   'A Little from Column A, a Little from Column B. Meaning: A course of action drawing a couple of different factors or reasons.',
 ];
 
-export const singleComment = {
+export const singleComment = (): SingleReview => ({
   id: Number(Date.now() + getRandomInteger(0,10000)),
   comment: comments[getRandomInteger(0,10)],
-  date: new Date(getRandomInteger(2000, 2022), getRandomInteger(0, 11), getRandomInteger(1, 30), getRandomInteger(1, 24), getRandomInteger(0, 59)),
-  rating: getRandomPositiveFloat(1, 5, 1),
+  reviewDate: new Date(getRandomInteger(2000, 2022), getRandomInteger(0, 11), getRandomInteger(1, 30), getRandomInteger(1, 24), getRandomInteger(0, 59)),
+  rating: Number(getRandomPositiveFloat(1, 5, 1)),
   user: {
     avatarImg: `img/mockup/avatars/${getRandomInteger(1,16)}.jpg`,
     id: Number(Date.now() + getRandomInteger(0,10000)),
     isPro: [true, false][getRandomInteger(0, 1)],
     name: names[getRandomInteger(1, 20)],
   },
-};
+});

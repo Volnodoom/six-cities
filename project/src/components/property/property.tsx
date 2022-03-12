@@ -1,17 +1,18 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { AppRoutes, LIMITED_NUMBER_OF_PHOTOS, PlaceCard } from '../../const';
-import { IdParam, SingleOffer } from '../../types/types';
-import { getStarRating } from '../../utils/utils-components';
+import { AppRoutes, LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, PlaceCard } from '../../const';
+import { IdParam, SingleOffer, SingleReview } from '../../types/types';
+import { filterCity } from '../../utils/utils-components';
 import Header from '../general/header';
 import HotelCard from '../general/hotel-card';
+import StarRating from '../general/star-rating';
 import PropertyCommentForm from './property-comment-form';
 import PropertyImg from './property-img';
 import PropertyReviewBox from './property-review-box';
 
-function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
-  const {accommodations} = props;
-  const {stringId} = useParams<IdParam>();
-  const accommodation = accommodations.find((line) => String(line.id) === stringId);
+function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[]}): JSX.Element {
+  const {accommodations, reviews} = props;
+  const {id} = useParams<IdParam>();
+  const accommodation = accommodations.find((line) => String(line.id) === id);
 
   if (accommodation === undefined) {
     return <Navigate to={AppRoutes.NotAvailable}/>;
@@ -28,7 +29,7 @@ function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
     accommodationType,
     description,
     goods,
-
+    price,
   } = accommodation;
 
   const {
@@ -37,7 +38,8 @@ function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
     name,
   } = accommodation.host;
 
-  const hostId = accommodation.host.id;
+  const cityName = accommodation.city.name;
+  const idCard = accommodation.id;
 
   return (
     <div className="page">
@@ -70,7 +72,7 @@ function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
 
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${getStarRating(rating)}%`}}></span>
+                  <StarRating rating={rating} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -78,30 +80,25 @@ function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
 
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {accommodationType.replace(accommodationType[0], accommodationType[0].toUpperCase())}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {adultsNumber} adults
                 </li>
               </ul>
 
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
 
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
+                  {goods.map((item) => <li className="property__inside-item" key={`${item}-${new Date()}`}>{item}</li>)}
                 </ul>
               </div>
 
@@ -109,30 +106,30 @@ function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar." />
+                    <img className="property__avatar user__avatar" src={avatarImg} width="74" height="74" alt="Host avatar." />
                   </div>
-                  <span className="property__user-name">
-                    Angelina
-                  </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
+                  <span className="property__user-name">{name}</span>
+                  {isPro ? <span className="property__user-status">Pro</span> : ''}
                 </div>
 
                 <div className="property__description">
-                  <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
+                  <p className="property__text">{description}</p>
                 </div>
               </div>
 
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">
+                  Reviews &middot;
+                  <span className="reviews__amount">
+                    {reviews.length > LIMITED_NUMBER_OF_REVIEWS ? '10' : reviews.length}
+                  </span>
+                </h2>
                 <ul className="reviews__list">
-                  <PropertyReviewBox/>
+                  {reviews
+                    .sort((a, b) => Date.parse(String(b.reviewDate)) - Date.parse(String(a.reviewDate)))
+                    .slice()
+                    .splice(0, LIMITED_NUMBER_OF_REVIEWS)
+                    .map((line) => <PropertyReviewBox review={line} key={line.id}/>)}
                 </ul>
                 <PropertyCommentForm/>
               </section>
@@ -147,7 +144,7 @@ function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <HotelCard cardKind={PlaceCard.Property}/>
+              {filterCity(cityName, accommodations).map((line) => <HotelCard accommodationInfo={line} cardKind={PlaceCard.Property} key={idCard}/>)}
             </div>
           </section>
 

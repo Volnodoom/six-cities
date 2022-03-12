@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoutes, PlaceCard } from '../../const';
 import { SingleOffer } from '../../types/types';
-import { getStarRating } from '../../utils/utils-components';
+import StarRating from './star-rating';
 
 function HotelCard (props: {cardKind: PlaceCard; accommodationInfo: SingleOffer}): JSX.Element {
   const {cardKind}=props;
@@ -61,7 +61,7 @@ function HotelCard (props: {cardKind: PlaceCard; accommodationInfo: SingleOffer}
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${getStarRating(rating)}%`}}></span>
+            <StarRating rating={rating} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

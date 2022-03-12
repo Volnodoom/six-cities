@@ -43,7 +43,8 @@ export type SingleOffer = {
 export type SingleReview = {
   id: number,
   comment: string,
-  date: Date,
+  //date => reviewDate
+  reviewDate: Date,
   rating: number,
   user: {
     // avatar_url => avatarImg
@@ -55,4 +56,4 @@ export type SingleReview = {
   },
 };
 
-export type IdParam = {stringId: string};
+export type IdParam = {id: string};

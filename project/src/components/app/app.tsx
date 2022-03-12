@@ -4,8 +4,9 @@ import {
   Route
 } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
+import { getRandomInteger, singleComment } from '../../mocks/mockup-comments';
 import { hotelInfo } from '../../mocks/mockup-hotel';
-import { SingleOffer } from '../../types/types';
+import { SingleOffer, SingleReview } from '../../types/types';
 import Favorites from '../favorites/favorites';
 import Login from '../login/login';
 import Main from '../main/main';
@@ -14,6 +15,7 @@ import NotAvailablePage from '../routing/not-available-page';
 import PrivateRoute from '../routing/private-route';
 
 const hotelData: SingleOffer[] = new Array(30).fill('').map((line) => hotelInfo());
+const reviewData: SingleReview[] = new Array(getRandomInteger(5,20)).fill('').map((line) => singleComment());
 
 function App (): JSX.Element {
   return (
@@ -25,7 +27,7 @@ function App (): JSX.Element {
         />
         <Route
           path={AppRoutes.Property()}
-          element={<Property accommodations={hotelData}/>}
+          element={<Property accommodations={hotelData} reviews={reviewData}/>}
         />
         <Route
           path={AppRoutes.Login}

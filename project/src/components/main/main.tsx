@@ -4,13 +4,11 @@ import Header from '../general/header';
 import { PlaceCard, Cities } from '../../const';
 import { SingleOffer } from '../../types/types';
 import { useState } from 'react';
+import { filterCity } from '../../utils/utils-components';
 
 function Main (props: {accommodations: SingleOffer[]}): JSX.Element {
   const {accommodations} = props;
-
   const [currentCity, setCurrentCity] = useState(Cities.Paris);
-  const filterCity = (cityName:string): SingleOffer[] =>
-    accommodations.filter((offer) => offer.city.name === cityName);
 
   return(
     <div className="page page--gray page--main">
@@ -23,7 +21,7 @@ function Main (props: {accommodations: SingleOffer[]}): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filterCity(currentCity).length} places to stay in {currentCity}</b>
+              <b className="places__found">{filterCity(currentCity, accommodations).length} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -40,7 +38,7 @@ function Main (props: {accommodations: SingleOffer[]}): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {filterCity(currentCity).map((offer) => <HotelCard accommodationInfo={offer} cardKind={PlaceCard.Main} key={offer.id}/>)}
+                {filterCity(currentCity, accommodations).map((offer) => <HotelCard accommodationInfo={offer} cardKind={PlaceCard.Main} key={offer.id}/>)}
               </div>
             </section>
             <div className="cities__right-section">

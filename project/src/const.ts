@@ -1,6 +1,11 @@
+export const TEN = 10;
 export const HUNDRED = 100;
+export const STAR_STEP = 20;
 export const STARS_NUMBER = 5;
 export const LIMITED_NUMBER_OF_PHOTOS = 6;
+export const LIMITED_NUMBER_OF_REVIEWS = 10;
+export const MONTH_FORMAT:{month: 'long'} = {month: 'long'};
+export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
 
 export const AppRoutes = {
   Login: '/login',

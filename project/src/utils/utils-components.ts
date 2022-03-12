@@ -1,10 +1,17 @@
-import { HUNDRED, STARS_NUMBER } from '../const';
+import { HUNDRED, STARS_NUMBER, STAR_STEP, TEN } from '../const';
+import { SingleOffer } from '../types/types';
 
 export const getStarRating = (rating: number): number => {
-  const percentage = Math.round(rating*HUNDRED/STARS_NUMBER);
+  const percentageValue = Math.round(rating*TEN/STARS_NUMBER)*TEN;
 
-  if (percentage > HUNDRED) {
+  if (percentageValue > HUNDRED) {
     return HUNDRED;
-  } else {return percentage;}
+  } else if (Number(percentageValue)%STAR_STEP !== 0) {
+    return Math.round(percentageValue/STAR_STEP)*STAR_STEP;
+  } else {
+    return percentageValue;
+  }
 };
 
+export const filterCity = (cityName:string, accommodations:SingleOffer[]): SingleOffer[] =>
+  accommodations.filter((offer) => offer.city.name === cityName);
