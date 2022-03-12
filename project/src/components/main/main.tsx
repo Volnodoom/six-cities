@@ -1,21 +1,29 @@
 import MainTabs from './main-tabs';
 import HotelCard from '../general/hotel-card';
 import Header from '../general/header';
-import { PlaceCard } from '../../const';
+import { PlaceCard, Cities } from '../../const';
+import { SingleOffer } from '../../types/types';
+import { useState } from 'react';
 
-function Main (): JSX.Element {
+function Main (props: {accommodations: SingleOffer[]}): JSX.Element {
+  const {accommodations} = props;
+
+  const [currentCity, setCurrentCity] = useState(Cities.Paris);
+  const filterCity = (cityName:string): SingleOffer[] =>
+    accommodations.filter((offer) => offer.city.name === cityName);
+
   return(
     <div className="page page--gray page--main">
       <Header mainPage/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <MainTabs />
+        <MainTabs selectedPlace={currentCity} onSelection={(town:Cities) => setCurrentCity(town)} />
         <div className="cities">
           {/* place for the logic of main-no-card it should replace the follow div*/}
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{filterCity(currentCity).length} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -32,7 +40,7 @@ function Main (): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <HotelCard cardKind={PlaceCard.Main}/>
+                {filterCity(currentCity).map((offer) => <HotelCard accommodationInfo={offer} cardKind={PlaceCard.Main} key={offer.id}/>)}
               </div>
             </section>
             <div className="cities__right-section">

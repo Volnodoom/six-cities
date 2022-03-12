@@ -1,8 +1,8 @@
-function PropertyDetails (): JSX.Element {
-
+function PropertyDetails (props: {urlImg:string}): JSX.Element {
+  const {urlImg} = props;
   return (
     <div className="property__image-wrapper">
-      <img className="property__image" src="img/room.jpg" alt="studio"/>
+      <img className="property__image" src={urlImg} alt="studio"/>
     </div>
   );
 }

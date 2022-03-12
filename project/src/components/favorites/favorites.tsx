@@ -1,9 +1,13 @@
 import { LogoPosition } from '../../const';
+import { SingleOffer } from '../../types/types';
 import Header from '../general/header';
 import Logo from '../general/logo';
-import FavoritesCard from './favoriets-card';
+import FavoritesCards from './favorites-cards';
 
-function Favorites (): JSX.Element {
+function Favorites (props: {accommodations: SingleOffer[]} ): JSX.Element {
+  const {accommodations} = props;
+  const favoritesOffers = accommodations.filter((line) => line.isFavorite === true);
+
   return(
     <div className="page">
       <Header/>
@@ -12,9 +16,7 @@ function Favorites (): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <FavoritesCard />
-            </ul>
+            <FavoritesCards accommodationsFavorite={favoritesOffers}/>
           </section>
         </div>
       </main>

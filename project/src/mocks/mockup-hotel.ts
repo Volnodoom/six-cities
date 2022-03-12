@@ -1,3 +1,5 @@
+import { SingleOffer } from '../types/types';
+
 const getRandomInteger = (a:number, b:number):number => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -97,37 +99,37 @@ export const names = [
   'Dale Jackson',
 ];
 
-export const hotelInfo = {
+export const hotelInfo = (): SingleOffer => ({
   id: Number(Date.now() + getRandomInteger(0,10000)),
   city: {
     name: cities[getRandomInteger(0,5)],
     location: {
-      latitude: getRandomPositiveFloat(45, 55),
-      longitude: getRandomPositiveFloat(2, 15),
+      latitude: Number(getRandomPositiveFloat(45, 55)),
+      longitude: Number(getRandomPositiveFloat(2, 15)),
       zoom: 10,
     },
   },
   bedrooms: getRandomInteger(1,10),
   adultsNumber: getRandomInteger(1,10),
-  price: getRandomInteger(50,10000),
-  rating: getRandomPositiveFloat(1, 5, 1),
-  type: apartmentType[getRandomInteger(0,3)],
+  price: getRandomInteger(50,500),
+  rating: Number(getRandomPositiveFloat(1, 5, 1)),
+  accommodationType: apartmentType[getRandomInteger(0,3)],
   title: titles[getRandomInteger(0,10)],
   description: descriptions[getRandomInteger(0,9)],
   goods: goodsBase.slice(getRandomInteger(0, 10), getRandomInteger(11,16)),
   isFavorite: [true, false][getRandomInteger(0, 1)],
   isPremium: [true, false][getRandomInteger(0, 1)],
-  propertyPreview: `img/buildings/${getRandomInteger(1,16)}.jpg`,
-  propertyPhotos: new Array(getRandomInteger(2, 6)).fill(' ').map((line) => line = `img/rooms/${getRandomInteger(1,17)}.jpg`),
+  propertyPreview: `img/mockup/buildings/${getRandomInteger(1,16)}.jpg`,
+  propertyPhotos: new Array(getRandomInteger(2, 6)).fill(' ').map((line) => line = `img/mockup/rooms/${getRandomInteger(1,17)}.jpg`),
   location: {
-    latitude: getRandomPositiveFloat(45, 55),
-    longitude: getRandomPositiveFloat(2, 15),
+    latitude: Number(getRandomPositiveFloat(45, 55)),
+    longitude: Number(getRandomPositiveFloat(2, 15)),
     zoom: 8,
   },
   host: {
-    avatarImg: `img/avatars/${getRandomInteger(1,16)}.jpg`,
+    avatarImg: `img/mockup/avatars/${getRandomInteger(1,16)}.jpg`,
     id: Number(Date.now() + getRandomInteger(0,10000)),
     isPro: [true, false][getRandomInteger(0, 1)],
     name: names[getRandomInteger(1, 10)],
   },
-};
+});

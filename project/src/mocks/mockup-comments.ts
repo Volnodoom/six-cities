@@ -32,7 +32,7 @@ export const singleComment = {
   date: new Date(getRandomInteger(2000, 2022), getRandomInteger(0, 11), getRandomInteger(1, 30), getRandomInteger(1, 24), getRandomInteger(0, 59)),
   rating: getRandomPositiveFloat(1, 5, 1),
   user: {
-    avatarImg: `img/avatars/${getRandomInteger(1,16)}.jpg`,
+    avatarImg: `img/mockup/avatars/${getRandomInteger(1,16)}.jpg`,
     id: Number(Date.now() + getRandomInteger(0,10000)),
     isPro: [true, false][getRandomInteger(0, 1)],
     name: names[getRandomInteger(1, 20)],

@@ -1,9 +1,14 @@
+export const HUNDRED = 100;
+export const STARS_NUMBER = 5;
+export const LIMITED_NUMBER_OF_PHOTOS = 6;
+
 export const AppRoutes = {
   Login: '/login',
   Root: '/',
   Favorites: '/favorites',
-  Property: (id:number) => `/offer/:${id}`,
+  Property: (id:number | string = ':id') => `/offer/${id}`,
   Plug: '#nowhere',
+  NotAvailable: '*',
 } as const;
 
 export const HOTEL_RATING = [
@@ -46,3 +51,14 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_Auth',
   Unknown = 'UNKNOWN',
 }
+
+export enum Cities {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
+

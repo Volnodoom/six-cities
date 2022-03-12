@@ -1,4 +1,4 @@
-export type HotelInfo = {
+export type SingleOffer = {
   id:number,
   city: {
     name: string,
@@ -13,7 +13,8 @@ export type HotelInfo = {
   // max_adults have been changed to adultsNumber (need use adapter)
   price: number,
   rating: number,
-  type: string,
+  //type => accommodationType
+  accommodationType: string,
   title: string,
   description: string,
   goods: string[],
@@ -39,7 +40,7 @@ export type HotelInfo = {
   },
 };
 
-export type SingleComment = {
+export type SingleReview = {
   id: number,
   comment: string,
   date: Date,
@@ -54,3 +55,4 @@ export type SingleComment = {
   },
 };
 
+export type IdParam = {stringId: string};

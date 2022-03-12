@@ -1,11 +1,43 @@
-import { PlaceCard } from '../../const';
+import { Navigate, useParams } from 'react-router-dom';
+import { AppRoutes, LIMITED_NUMBER_OF_PHOTOS, PlaceCard } from '../../const';
+import { IdParam, SingleOffer } from '../../types/types';
+import { getStarRating } from '../../utils/utils-components';
 import Header from '../general/header';
 import HotelCard from '../general/hotel-card';
 import PropertyCommentForm from './property-comment-form';
 import PropertyImg from './property-img';
 import PropertyReviewBox from './property-review-box';
 
-function Property (): JSX.Element {
+function Property (props: {accommodations: SingleOffer[]}): JSX.Element {
+  const {accommodations} = props;
+  const {stringId} = useParams<IdParam>();
+  const accommodation = accommodations.find((line) => String(line.id) === stringId);
+
+  if (accommodation === undefined) {
+    return <Navigate to={AppRoutes.NotAvailable}/>;
+  }
+
+  const {
+    propertyPhotos,
+    isPremium,
+    title,
+    isFavorite,
+    rating,
+    bedrooms,
+    adultsNumber,
+    accommodationType,
+    description,
+    goods,
+
+  } = accommodation;
+
+  const {
+    avatarImg,
+    isPro,
+    name,
+  } = accommodation.host;
+
+  const hostId = accommodation.host.id;
 
   return (
     <div className="page">
@@ -15,22 +47,20 @@ function Property (): JSX.Element {
 
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <PropertyImg/>
+              {propertyPhotos
+                .slice()
+                .splice(0, LIMITED_NUMBER_OF_PHOTOS)
+                .map((line) => <PropertyImg urlImg={line} key={`${line}-${new Date()}`}/>)}
             </div>
           </div>
 
           <div className="property__container container">
             <div className="property__wrapper">
-              {/* optional div is follow  (it is placing lable premium on the card)*/}
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {isPremium ? <div className="property__mark"><span>Premium</span></div> : ''}
 
               <div className="property__name-wrapper">
-                <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
-                </h1>
-                <button className="property__bookmark-button button" type="button">
+                <h1 className="property__name">{title}</h1>
+                <button className={`${isFavorite ? 'property__bookmark-button--active button' : ''} property__bookmark-button button`} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -40,10 +70,10 @@ function Property (): JSX.Element {
 
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: `${getStarRating(rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
 
               <ul className="property__features">
