@@ -133,3 +133,57 @@ export const hotelInfo = (): SingleOffer => ({
     name: names[getRandomInteger(1, 10)],
   },
 });
+
+const amsterdamCoordinates = [
+  {
+    latitude: 52.3909553943508,
+    longitude: 4.85309666406198,
+    zoom: 8,
+  },
+  {
+    latitude: 52.369553943508,
+    longitude: 4.85309666406198,
+    zoom: 8,
+  },
+  {
+    latitude: 52.3909553943508,
+    longitude: 4.929309666406198,
+    zoom: 8,
+  },
+  {
+    latitude: 52.3809553943508,
+    longitude: 4.939309666406198,
+    zoom: 8,
+  },
+];
+
+export const AmsterdamMapData = (): SingleOffer => ({
+  id: Number(Date.now() + getRandomInteger(0,10000)),
+  city: {
+    name: cities[3],
+    location: {
+      latitude: 52.377956,
+      longitude: 4.897070,
+      zoom: 10,
+    },
+  },
+  bedrooms: getRandomInteger(1,10),
+  adultsNumber: getRandomInteger(1,10),
+  price: getRandomInteger(50,500),
+  rating: Number(getRandomPositiveFloat(1, 5, 1)),
+  accommodationType: apartmentType[getRandomInteger(0,3)],
+  title: titles[getRandomInteger(0,10)],
+  description: descriptions[getRandomInteger(0,9)],
+  goods: goodsBase.slice(getRandomInteger(0, 10), getRandomInteger(11,16)),
+  isFavorite: [true, false][getRandomInteger(0, 1)],
+  isPremium: [true, false][getRandomInteger(0, 1)],
+  propertyPreview: `img/mockup/buildings/${getRandomInteger(1,16)}.jpg`,
+  propertyPhotos: new Array(getRandomInteger(2, 6)).fill(' ').map((line) => line = `img/mockup/rooms/${getRandomInteger(1,17)}.jpg`),
+  location: amsterdamCoordinates[Number(getRandomInteger(0, 3))],
+  host: {
+    avatarImg: `img/mockup/avatars/${getRandomInteger(1,16)}.jpg`,
+    id: Number(Date.now() + getRandomInteger(0,10000)),
+    isPro: [true, false][getRandomInteger(0, 1)],
+    name: names[getRandomInteger(1, 10)],
+  },
+});

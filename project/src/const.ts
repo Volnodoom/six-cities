@@ -6,6 +6,8 @@ export const LIMITED_NUMBER_OF_PHOTOS = 6;
 export const LIMITED_NUMBER_OF_REVIEWS = 10;
 export const MONTH_FORMAT:{month: 'long'} = {month: 'long'};
 export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
+export const PIN_ON_MAP_SIZE = [28, 40];
+export const PIN_ON_MAP_ANCHOR = [14, 40];
 
 export const AppRoutes = {
   Login: '/login',
@@ -15,6 +17,13 @@ export const AppRoutes = {
   Plug: '#nowhere',
   NotAvailable: '*',
 } as const;
+
+export const PinOnMap = {
+  SizeWidth: 28,
+  SizeHeight: 40,
+  AnchorWidth: 28,
+  AnchorHeight: 40,
+};
 
 export const HOTEL_RATING = [
   {
@@ -66,4 +75,8 @@ export enum Cities {
   Dusseldorf = 'Dusseldorf',
 }
 
+export enum PinMarker {
+  Default = 'img/pin.svg',
+  Selected = 'img/pin-active.svg',
+}
 
