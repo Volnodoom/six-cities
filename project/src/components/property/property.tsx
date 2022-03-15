@@ -3,7 +3,7 @@ import { AppRoutes, LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, PlaceCa
 import { IdParam, SingleOffer, SingleReview } from '../../types/types';
 import { filterCity } from '../../utils/utils-components';
 import Header from '../general/header';
-import HotelCard from '../general/hotel-card';
+import HotelCard from '../general/hotel-card/hotel-card';
 import StarRating from '../general/star-rating';
 import PropertyCommentForm from './property-comment-form';
 import PropertyImg from './property-img';

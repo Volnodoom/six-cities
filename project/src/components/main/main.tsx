@@ -1,5 +1,5 @@
 import MainTabs from './main-tabs';
-import HotelCard from '../general/hotel-card';
+import HotelCard from '../general/hotel-card/hotel-card';
 import Header from '../general/header';
 import { PlaceCard, Cities } from '../../const';
 import { SingleOffer } from '../../types/types';

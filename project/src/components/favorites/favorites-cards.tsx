@@ -1,6 +1,6 @@
 import { Cities, PlaceCard } from '../../const';
 import { SingleOffer } from '../../types/types';
-import HotelCard from '../general/hotel-card';
+import HotelCard from '../general/hotel-card/hotel-card';
 
 function FavoritesCards (props: {accommodationsFavorite: SingleOffer[]}): JSX.Element {
   const {accommodationsFavorite} = props;
