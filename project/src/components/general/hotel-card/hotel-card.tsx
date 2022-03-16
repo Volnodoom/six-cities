@@ -41,17 +41,17 @@ function HotelCard (props: HotelCardProps): JSX.Element {
   }
 
   return(
-    <article className={`${articleClassName} place-card`}>
+    <article
+      className={`${articleClassName} place-card`}
+      onMouseEnter={() => {if(onMouseIn){onMouseIn({isCardPointed: true, location});}}}
+      onMouseLeave={() => {if(onMouseIn){onMouseIn({isCardPointed: false, location});}}}
+    >
 
       {(cardKind === PlaceCard.Main) && isPremium
         ? <div className="place-card__mark"><span>Premium</span></div>
         : ''}
 
-      <div
-        className={`${divImgLinkClassName} place-card__image-wrapper`}
-        onMouseEnter={() => {if(onMouseIn){onMouseIn({isCardPointed: true, location});}}}
-        onMouseLeave={() => {if(onMouseIn){onMouseIn({isCardPointed: false, location});}}}
-      >
+      <div className={`${divImgLinkClassName} place-card__image-wrapper`}>
         <Link to={AppRoutes.Property(id)} >
           <img
             className="place-card__image"

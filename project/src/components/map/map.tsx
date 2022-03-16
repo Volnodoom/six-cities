@@ -38,6 +38,11 @@ function Map (props: MapProps): JSX.Element {
       accommodations.forEach((line) => {
         const {latitude, longitude} = line.location;
         designPinOnMap(latitude, longitude, defaultCustomIcon, map);
+
+        if (pointedCard && pointedCard.isCardPointed) {
+          designPinOnMap(pointedCard.location.latitude, pointedCard.location.longitude, selectedCustomIcon, map);
+        }
+
       });
     }
 
@@ -46,19 +51,7 @@ function Map (props: MapProps): JSX.Element {
       designPinOnMap(latitude, longitude, selectedCustomIcon, map);
     }
 
-  }, [map, accommodations]);
-
-  useEffect(() => {
-    if (pointedCard && map) {
-      const {latitude, longitude} = pointedCard.location;
-
-      if (pointedCard.isCardPointed) {
-        designPinOnMap(latitude, longitude, selectedCustomIcon, map);
-      } else {
-        designPinOnMap(latitude, longitude, defaultCustomIcon, map);
-      }
-    }
-  }, [pointedCard]);
+  }, [map, accommodations, pointedCard]);
 
   return(
     <section className={`${positionClass} map`} >
