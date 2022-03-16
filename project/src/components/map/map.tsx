@@ -37,21 +37,22 @@ function Map (props: MapProps): JSX.Element {
     if(map) {
       accommodations.forEach((line) => {
         const {latitude, longitude} = line.location;
-
-        town !== undefined &&
-          town.location.latitude === latitude &&
-          town.location.longitude === longitude
-          ? designPinOnMap(latitude, longitude, selectedCustomIcon, map)
-          : designPinOnMap(latitude, longitude, defaultCustomIcon, map);
+        designPinOnMap(latitude, longitude, defaultCustomIcon, map);
       });
     }
+
+    if (town !== undefined && map) {
+      const {latitude, longitude} = town.location;
+      designPinOnMap(latitude, longitude, selectedCustomIcon, map);
+    }
+
   }, [map, accommodations]);
 
   useEffect(() => {
     if (pointedCard && map) {
       const {latitude, longitude} = pointedCard.location;
 
-      if (pointedCard.isCardPointed === true) {
+      if (pointedCard.isCardPointed) {
         designPinOnMap(latitude, longitude, selectedCustomIcon, map);
       } else {
         designPinOnMap(latitude, longitude, defaultCustomIcon, map);
