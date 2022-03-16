@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { MouseEvent } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoutes, LogoPosition } from '../../const';
 
 function Logo (props: {position: LogoPosition}):JSX.Element {
@@ -22,8 +23,16 @@ function Logo (props: {position: LogoPosition}):JSX.Element {
       break;
   }
 
+  const location = useLocation();
+  const handleLinkDisable = (evt: MouseEvent<HTMLAnchorElement>) => {
+    if (location.pathname === AppRoutes.Root || location.pathname === AppRoutes.Empty) {
+      evt.preventDefault();
+    }
+  };
+
+
   return(
-    <Link className={logoClass[0]} to={AppRoutes.Root}>
+    <Link className={logoClass[0]} to={AppRoutes.Root} onClick={ handleLinkDisable}>
       <img className={logoClass[1]} src="img/logo.svg" alt="6 cities logo" width={logoParameters[0]} height={logoParameters[1]}/>
     </Link>
   );

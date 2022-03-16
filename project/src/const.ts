@@ -15,7 +15,7 @@ export const AppRoutes = {
   Root: '/',
   Favorites: '/favorites',
   Property: (id:number | string = ':id') => `/offer/${id}`,
-  Plug: '#nowhere',
+  Empty: '',
   NotAvailable: '*',
 } as const;
 
