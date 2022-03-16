@@ -1,3 +1,4 @@
+
 export type SingleOffer = {
   id:number,
   city: {
@@ -55,6 +56,15 @@ export type SingleReview = {
     name: string,
   },
 };
+
+export type AccommodationLocation = {
+  isCardPointed: boolean;
+  location: {
+    latitude: number,
+    longitude: number,
+    zoom: number,
+  }
+}
 
 export type IdParam = {id: string};
 

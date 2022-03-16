@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { PlaceCard } from '../../const';
-import { SingleOffer } from '../../types/types';
+import { AccommodationLocation, SingleOffer } from '../../types/types';
 import HotelCard from '../general/hotel-card/hotel-card';
 import Map from '../map/map';
 
 
 function MainContent (props: {cityAccommodations: SingleOffer[]}): JSX.Element {
   const {cityAccommodations} = props;
+  const [mouseEnteredCard, setMouseEnteredCard] = useState<AccommodationLocation | null>(null);
 
   return(
     <div className="cities__places-container container">
@@ -27,12 +29,21 @@ function MainContent (props: {cityAccommodations: SingleOffer[]}): JSX.Element {
             <li className="places__option" tabIndex={0}>Top rated first</li>
           </ul>
         </form>
+
         <div className="cities__places-list places__list tabs__content">
-          {cityAccommodations.map((offer) => <HotelCard accommodationInfo={offer} cardKind={PlaceCard.Main} key={offer.id}/>)}
+          {cityAccommodations
+            .map((offer) => (
+              <HotelCard
+                onMouseIn={(offerCard: AccommodationLocation | null) => setMouseEnteredCard(offerCard)}
+                accommodationInfo={offer}
+                cardKind={PlaceCard.Main}
+                key={offer.id}
+              />))}
         </div>
+
       </section>
       <div className="cities__right-section">
-        <Map accommodations={cityAccommodations}/>
+        <Map accommodations={cityAccommodations} pointedCard={mouseEnteredCard}/>
       </div>
     </div>
   );

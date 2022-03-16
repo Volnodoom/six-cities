@@ -1,14 +1,21 @@
 import { Link } from 'react-router-dom';
 import { AppRoutes, PlaceCard } from '../../../const';
-import { SingleOffer } from '../../../types/types';
+import { AccommodationLocation, SingleOffer } from '../../../types/types';
 import CardContent from './card-content';
 
-function HotelCard (props: {cardKind: PlaceCard; accommodationInfo: SingleOffer}): JSX.Element {
-  const {cardKind, accommodationInfo}=props;
+type HotelCardProps = {
+  accommodationInfo: SingleOffer,
+  onMouseIn?: (offerCard: AccommodationLocation | null) => void,
+  cardKind: PlaceCard,
+}
+
+function HotelCard (props: HotelCardProps): JSX.Element {
+  const {cardKind, accommodationInfo, onMouseIn}=props;
   const {
     id,
     isPremium,
     propertyPreview,
+    location,
   }=props.accommodationInfo;
 
   let articleClassName = '';
@@ -40,7 +47,11 @@ function HotelCard (props: {cardKind: PlaceCard; accommodationInfo: SingleOffer}
         ? <div className="place-card__mark"><span>Premium</span></div>
         : ''}
 
-      <div className={`${divImgLinkClassName} place-card__image-wrapper`}>
+      <div
+        className={`${divImgLinkClassName} place-card__image-wrapper`}
+        onMouseEnter={() => {if(onMouseIn){onMouseIn({isCardPointed: true, location});}}}
+        onMouseLeave={() => {if(onMouseIn){onMouseIn({isCardPointed: false, location});}}}
+      >
         <Link to={AppRoutes.Property(id)} >
           <img
             className="place-card__image"
