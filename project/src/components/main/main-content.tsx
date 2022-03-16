@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlaceCard } from '../../const';
+import { MapClassName, PlaceCard } from '../../const';
 import { AccommodationLocation, SingleOffer } from '../../types/types';
 import HotelCard from '../general/hotel-card/hotel-card';
 import Map from '../map/map';
@@ -43,7 +43,7 @@ function MainContent (props: {cityAccommodations: SingleOffer[]}): JSX.Element {
 
       </section>
       <div className="cities__right-section">
-        <Map accommodations={cityAccommodations} pointedCard={mouseEnteredCard}/>
+        <Map positionClass={MapClassName.Main} accommodations={cityAccommodations} pointedCard={mouseEnteredCard}/>
       </div>
     </div>
   );

@@ -3,18 +3,20 @@ import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/use-map';
 import { AccommodationLocation, SingleOffer } from '../../types/types';
 import { Icon } from 'leaflet';
-import { PinMarker, PinOnMap } from '../../const';
+import { MapClassName, PinMarker, PinOnMap } from '../../const';
 import 'leaflet/dist/leaflet.css';
 import { designPinOnMap } from '../../utils/utils-components';
 
 type MapProps = {
   accommodations: SingleOffer[],
-  pointedCard: AccommodationLocation | null,
+  positionClass: MapClassName;
+  pointedCard?: AccommodationLocation | null,
+  town?: SingleOffer;
 }
 
 function Map (props: MapProps): JSX.Element {
   const {city} = props.accommodations[0];
-  const {accommodations, pointedCard} = props;
+  const {accommodations, pointedCard, positionClass, town} = props;
 
   const mapRef = useRef<HTMLDivElement | null> (null);
   const map = useMap(mapRef, city);
@@ -35,7 +37,12 @@ function Map (props: MapProps): JSX.Element {
     if(map) {
       accommodations.forEach((line) => {
         const {latitude, longitude} = line.location;
-        designPinOnMap(latitude, longitude, defaultCustomIcon, map);
+
+        town !== undefined &&
+          town.location.latitude === latitude &&
+          town.location.longitude === longitude
+          ? designPinOnMap(latitude, longitude, selectedCustomIcon, map)
+          : designPinOnMap(latitude, longitude, defaultCustomIcon, map);
       });
     }
   }, [map, accommodations]);
@@ -53,7 +60,8 @@ function Map (props: MapProps): JSX.Element {
   }, [pointedCard]);
 
   return(
-    <section className="cities__map map" ref={mapRef} style={{height: '100%'}}>
+    <section className={`${positionClass} map`} >
+      <div ref={mapRef} style={{height: '100%'}}/>
     </section>
   );
 }

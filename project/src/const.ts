@@ -4,6 +4,7 @@ export const STAR_STEP = 20;
 export const STARS_NUMBER = 5;
 export const LIMITED_NUMBER_OF_PHOTOS = 6;
 export const LIMITED_NUMBER_OF_REVIEWS = 10;
+export const LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS = 3;
 export const MONTH_FORMAT:{month: 'long'} = {month: 'long'};
 export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
 export const PIN_ON_MAP_SIZE = [28, 40];
@@ -80,3 +81,7 @@ export enum PinMarker {
   Selected = 'img/pin-active.svg',
 }
 
+export enum MapClassName {
+  Main = 'cities__map',
+  Property = 'property__map',
+}

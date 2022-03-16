@@ -1,10 +1,11 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { AppRoutes, LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, PlaceCard } from '../../const';
+import { AppRoutes, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS, LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, MapClassName, PlaceCard } from '../../const';
 import { IdParam, SingleOffer, SingleReview } from '../../types/types';
 import { filterCity } from '../../utils/utils-components';
 import Header from '../general/header';
 import HotelCard from '../general/hotel-card/hotel-card';
 import StarRating from '../general/star-rating';
+import Map from '../map/map';
 import PropertyCommentForm from './property-comment-form';
 import PropertyImg from './property-img';
 import PropertyReviewBox from './property-review-box';
@@ -40,6 +41,7 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
 
   const cityName = accommodation.city.name;
   const idCard = accommodation.id;
+  const nearestAccommodations = filterCity(cityName, accommodations).splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS);
 
   return (
     <div className="page">
@@ -136,7 +138,7 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
 
             </div>
           </div>
-
+          <Map positionClass={MapClassName.Property} accommodations={nearestAccommodations} town={accommodation}/>
         </section>
 
         <div className="container">
@@ -144,7 +146,8 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {filterCity(cityName, accommodations).map((line) => <HotelCard accommodationInfo={line} cardKind={PlaceCard.Property} key={idCard}/>)}
+              {nearestAccommodations
+                .map((line) => <HotelCard accommodationInfo={line} cardKind={PlaceCard.Property} key={idCard}/>)}
             </div>
           </section>
 
