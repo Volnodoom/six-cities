@@ -57,13 +57,20 @@ export type SingleReview = {
   },
 };
 
-export type AccommodationLocation = {
-  isCardPointed: boolean;
+export type CityMainName = {name: string}
+export type CityMainLocation = {
   location: {
     latitude: number,
     longitude: number,
     zoom: number,
   }
+}
+
+export type CityMainDetails = CityMainName & CityMainLocation
+
+
+export type AccommodationLocation = CityMainLocation & {
+  isCardPointed: boolean;
 }
 
 export type IdParam = {id: string};

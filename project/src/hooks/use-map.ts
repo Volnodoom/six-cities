@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { SingleOffer } from '../types/types';
+import { CityMainDetails } from '../types/types';
 import { Map, TileLayer } from 'leaflet';
 
 
 function useMap (
   mapRef:  React.MutableRefObject<HTMLDivElement | null>,
-  city:SingleOffer['city'],
+  city: CityMainDetails,
 ): Map | null {
   const [map, setMap] = useState <Map | null>(null);
 

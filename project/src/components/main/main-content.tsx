@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { MapClassName, PlaceCard } from '../../const';
-import { AccommodationLocation, SingleOffer } from '../../types/types';
+import { AccommodationLocation } from '../../types/types';
+import * as selector from '../../store/selector';
 import HotelCard from '../general/hotel-card/hotel-card';
 import Map from '../map/map';
 
 
-function MainContent (props: {cityAccommodations: SingleOffer[]}): JSX.Element {
-  const {cityAccommodations} = props;
+function MainContent (): JSX.Element {
+  const cityAccommodations = useSelector(selector.getOffersForCity);
   const [mouseEnteredCard, setMouseEnteredCard] = useState<AccommodationLocation | null>(null);
 
   return(
@@ -43,7 +45,7 @@ function MainContent (props: {cityAccommodations: SingleOffer[]}): JSX.Element {
 
       </section>
       <div className="cities__right-section">
-        <Map positionClass={MapClassName.Main} accommodations={cityAccommodations} pointedCard={mouseEnteredCard}/>
+        <Map positionClass={MapClassName.Main} pointedCard={mouseEnteredCard}/>
       </div>
     </div>
   );

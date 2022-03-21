@@ -104,8 +104,8 @@ export const hotelInfo = (): SingleOffer => ({
   city: {
     name: cities[getRandomInteger(0,5)],
     location: {
-      latitude: Number(getRandomPositiveFloat(45, 55)),
-      longitude: Number(getRandomPositiveFloat(2, 15)),
+      latitude: Number(getRandomPositiveFloat(50, 55)),
+      longitude: Number(getRandomPositiveFloat(10, 15)),
       zoom: 10,
     },
   },
@@ -122,8 +122,8 @@ export const hotelInfo = (): SingleOffer => ({
   propertyPreview: `img/mockup/buildings/${getRandomInteger(1,16)}.jpg`,
   propertyPhotos: new Array(getRandomInteger(2, 6)).fill(' ').map((line) => line = `img/mockup/rooms/${getRandomInteger(1,17)}.jpg`),
   location: {
-    latitude: Number(getRandomPositiveFloat(45, 55)),
-    longitude: Number(getRandomPositiveFloat(2, 15)),
+    latitude: Number(getRandomPositiveFloat(50, 55)),
+    longitude: Number(getRandomPositiveFloat(10, 15)),
     zoom: 8,
   },
   host: {

@@ -4,8 +4,10 @@ import {
   Route
 } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
+import { useAppDispatch } from '../../hooks';
 import { getRandomInteger, singleComment } from '../../mocks/mockup-comments';
-import { AmsterdamMapData } from '../../mocks/mockup-hotel';
+import { hotelInfo } from '../../mocks/mockup-hotel';
+import { listOffers } from '../../store/action';
 import { SingleOffer, SingleReview } from '../../types/types';
 import Favorites from '../favorites/favorites';
 import Login from '../login/login';
@@ -14,16 +16,19 @@ import Property from '../property/property';
 import NotAvailablePage from '../routing/not-available-page';
 import PrivateRoute from '../routing/private-route';
 
-const hotelData: SingleOffer[] = new Array(4).fill('').map(() => AmsterdamMapData());
-const reviewData: SingleReview[] = new Array(getRandomInteger(1,13)).fill('').map((line) => singleComment());
+const hotelData: SingleOffer[] = new Array(30).fill('').map(() => hotelInfo());
+const reviewData: SingleReview[] = new Array(getRandomInteger(1,13)).fill('').map(() => singleComment());
 
 function App (): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(listOffers(hotelData));
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoutes.Root}
-          element={<Main accommodations={hotelData}/>}
+          element={<Main />}
         />
         <Route
           path={AppRoutes.Property()}
