@@ -1,8 +1,5 @@
 import MainTabs from './main-tabs';
 import Header from '../general/header';
-// import { Cities } from '../../const';
-// import { SingleOffer } from '../../types/types';
-// import { useState } from 'react';
 import { filterCity } from '../../utils/utils-components';
 import MainEmpty from './main-empty';
 import MainContent from './main-content';

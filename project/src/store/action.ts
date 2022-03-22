@@ -15,4 +15,3 @@ export const listOffers = createAction<SingleOffer[]>(
   ActionType.listOffers,
 );
 
-

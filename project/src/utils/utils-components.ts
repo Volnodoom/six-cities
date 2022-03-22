@@ -25,3 +25,18 @@ export const designPinOnMap = (latitude: number, longitude: number, pin: DivIcon
 
   return marker.setIcon(pin).addTo(map);
 };
+
+export const sortLowToHigh = (list: SingleOffer[]):SingleOffer[] =>
+  list
+    .slice()
+    .sort((valueA, valueB) => valueA.price - valueB.price);
+
+export const sortHighToLow = (list: SingleOffer[]):SingleOffer[] =>
+  list
+    .slice()
+    .sort((valueA, valueB) => valueB.price - valueA.price);
+
+export const sortTopRate = (list: SingleOffer[]):SingleOffer[] =>
+  list
+    .slice()
+    .sort((valueA, valueB) => valueB.rating - valueA.rating);
