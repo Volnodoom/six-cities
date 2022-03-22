@@ -58,7 +58,7 @@ export type SingleReview = {
 };
 
 export type CityMainName = {name: string}
-export type CityMainLocation = {
+export type Location = {
   location: {
     latitude: number,
     longitude: number,
@@ -66,10 +66,10 @@ export type CityMainLocation = {
   }
 }
 
-export type CityMainDetails = CityMainName & CityMainLocation
+export type CityMainDetails = CityMainName & Location
 
 
-export type AccommodationLocation = CityMainLocation & {
+export type AccommodationLocation = Location & {
   isCardPointed: boolean;
 }
 
