@@ -10,12 +10,19 @@ export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
 export const PIN_ON_MAP_SIZE = [28, 40];
 export const PIN_ON_MAP_ANCHOR = [14, 40];
 
+export enum SortingLabel  {
+  Popular = 'Popular',
+  Low = 'Price: low to high',
+  High = 'Price: high to low',
+  TopRate = 'Top rated first',
+}
+
 export const AppRoutes = {
   Login: '/login',
   Root: '/',
   Favorites: '/favorites',
   Property: (id:number | string = ':id') => `/offer/${id}`,
-  Plug: '#nowhere',
+  Empty: '',
   NotAvailable: '*',
 } as const;
 
@@ -85,3 +92,4 @@ export enum MapClassName {
   Main = 'cities__map',
   Property = 'property__map',
 }
+

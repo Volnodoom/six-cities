@@ -69,7 +69,7 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
             </div>
           </div>
 
-          <Map positionClass={MapClassName.Property} accommodations={nearestAccommodations} town={accommodation}/>
+          <Map positionClass={MapClassName.Property} propertyTownInfo={accommodation}/>
         </section>
 
         <div className="container">

@@ -1,15 +1,14 @@
 import { MouseEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Cities } from '../../const';
+import * as selector from '../../store/selector';
+import { currentCity } from '../../store/action';
 
-
-type MainTabsProps = {
-  selectedPlace:Cities,
-  onSelection: (town:Cities) => void,
-}
-
-function MainTabs (props: MainTabsProps): JSX.Element {
-  const {selectedPlace, onSelection} = props;
+function MainTabs (): JSX.Element {
   const citiesArray = Object.values(Cities);
+
+  const dispatch = useDispatch();
+  const selectedTown = useSelector(selector.getCurrentCity);
 
   const handleCitySelection = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
@@ -18,7 +17,7 @@ function MainTabs (props: MainTabsProps): JSX.Element {
     if (selectedCity !== null ) {
       const index = citiesArray.findIndex((line) => line === selectedCity);
       if (index >= 0) {
-        onSelection(citiesArray[index]);
+        dispatch(currentCity(citiesArray[index]));
       }
     }
   };
@@ -34,7 +33,7 @@ function MainTabs (props: MainTabsProps): JSX.Element {
               <li className="locations__item" key={city}>
                 <a
                   href="#nowhere"
-                  className={`${selectedPlace === city ? 'tabs__item--active' : ''} locations__item-link tabs__item`}
+                  className={`${selectedTown === city ? 'tabs__item--active' : ''} locations__item-link tabs__item`}
                   onClick={handleCitySelection}
                 >
                   <span>{city}</span>
