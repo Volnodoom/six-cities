@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Cities } from '../const';
+import { AuthorizationStatus, Cities } from '../const';
 import { ActionType } from '../types/action-types';
 import { SingleOffer } from '../types/types';
 
@@ -13,5 +13,9 @@ export const listOffersForCity = createAction<SingleOffer[] | []>(
 
 export const listOffers = createAction<SingleOffer[]>(
   ActionType.listOffers,
+);
+
+export const requireAuthorization = createAction<AuthorizationStatus>(
+  ActionType.requireAuthorization,
 );
 

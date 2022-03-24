@@ -1,13 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Cities } from '../const';
+import { AuthorizationStatus, Cities } from '../const';
 import { CityData } from '../types/state';
-import { currentCity, listOffers, listOffersForCity } from './action';
+import { currentCity, listOffers, listOffersForCity, requireAuthorization } from './action';
 
 
 const initialState: CityData = {
   currentCity: Cities.Paris,
   listOffersForCity: [],
   listOffers: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -19,6 +20,8 @@ const reducer = createReducer(initialState, (builder) => {
       state.listOffersForCity = action.payload;
     }).addCase(listOffers, (state, action) => {
       state.listOffers = action.payload;
+    }).addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 

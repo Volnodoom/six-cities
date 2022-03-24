@@ -75,3 +75,4 @@ export type AccommodationLocation = Location & {
 
 export type IdParam = {id: string};
 
+export type Token = string;

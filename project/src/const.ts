@@ -9,12 +9,21 @@ export const MONTH_FORMAT:{month: 'long'} = {month: 'long'};
 export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
 export const PIN_ON_MAP_SIZE = [28, 40];
 export const PIN_ON_MAP_ANCHOR = [14, 40];
+export const BACKEND_URL = 'https://9.react.pages.academy/six-cities';
+export const REQUEST_TIMEOUT = 5000;
+export const AUTH_TOKEN_KEY_NAME = 'guess-six-sites-token';
 
 export enum SortingLabel  {
   Popular = 'Popular',
   Low = 'Price: low to high',
   High = 'Price: high to low',
   TopRate = 'Top rated first',
+}
+
+export enum APIRoutes {
+  Favorites = '/favorites',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export const AppRoutes = {
