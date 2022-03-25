@@ -1,13 +1,22 @@
 export type AuthData = {
-  login: string;
-  password: string;
-};
+  login: string,
+  password: string,
+}
 
 export type UserData = {
-  id: number;
-  email: string;
-  token: string;
-  avatar: string;
-  name: string;
-  isPro: boolean;
-};
+  id: number,
+  email: string,
+  token: string,
+  avatar: string,
+  name: string,
+  isPro: boolean,
+}
+
+export type RawUserData = {
+  id: number,
+  email: string,
+  token: string,
+  'avatar_url'?: string,
+  name: string,
+  'is_pro'?: boolean,
+}

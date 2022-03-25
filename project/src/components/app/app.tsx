@@ -1,29 +1,27 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from 'react-router-dom';
-import { AppRoutes, AuthorizationStatus } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { getRandomInteger, singleComment } from '../../mocks/mockup-comments';
-import { hotelInfo } from '../../mocks/mockup-hotel';
-import { listOffers } from '../../store/action';
-import { SingleOffer, SingleReview } from '../../types/types';
+import { useSelector } from 'react-redux';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AppRoutes } from '../../const';
+import { isCheckedAuth } from '../../utils/utils-components';
 import Favorites from '../favorites/favorites';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Login from '../login/login';
 import Main from '../main/main';
 import Property from '../property/property';
 import NotAvailablePage from '../routing/not-available-page';
 import PrivateRoute from '../routing/private-route';
-
-const hotelData: SingleOffer[] = new Array(30).fill('').map(() => hotelInfo());
-const reviewData: SingleReview[] = new Array(getRandomInteger(1,13)).fill('').map(() => singleComment());
+import * as selector from '../../store/selector';
 
 function App (): JSX.Element {
-  const dispatch = useAppDispatch();
-  dispatch(listOffers(hotelData));
+  const authorizationStatus = useSelector(selector.getAuthorizationStatus);
+  const isDataLoaded = useSelector(selector.getIsDataLoadedStatus);
 
-  return (
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return(
+      <LoadingScreen />
+    );
+  }
+
+  return(
     <BrowserRouter>
       <Routes>
         <Route
@@ -32,7 +30,7 @@ function App (): JSX.Element {
         />
         <Route
           path={AppRoutes.Property()}
-          element={<Property accommodations={hotelData} reviews={reviewData}/>}
+          element={<Property />}
         />
         <Route
           path={AppRoutes.Login}
@@ -41,8 +39,8 @@ function App (): JSX.Element {
         <Route
           path={AppRoutes.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <Favorites accommodations={hotelData}/>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <Favorites />
             </PrivateRoute>
           }
         />

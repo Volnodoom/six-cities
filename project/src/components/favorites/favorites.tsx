@@ -1,22 +1,27 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { LogoPosition } from '../../const';
-import { SingleOffer } from '../../types/types';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import * as selector from '../../store/selector';
 import Header from '../general/header';
 import Logo from '../general/logo';
 import FavoritesCards from './favorites-cards';
+import FavoritesEmpty from './favorites-empty';
 
-function Favorites (props: {accommodations: SingleOffer[]} ): JSX.Element {
-  const {accommodations} = props;
-  const favoritesOffers = accommodations.filter((line) => line.isFavorite === true);
+function Favorites (): JSX.Element {
+  const dispatch = useDispatch();
+  dispatch(fetchFavoritesAction());
+  const favoritesOffers = useSelector(selector.getFavorites);
+  const isEmpty = favoritesOffers.length === 0;
 
   return(
     <div className="page">
       <Header/>
-
-      <main className="page__main page__main--favorites">
+      <main className={`page__main page__main--favorites ${isEmpty && 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesCards accommodationsFavorite={favoritesOffers}/>
+          <section className={`favorites ${isEmpty && 'favorites--empty'}`}>
+            {isEmpty
+              ? <FavoritesEmpty />
+              :  <FavoritesCards />}
           </section>
         </div>
       </main>

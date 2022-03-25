@@ -1,6 +1,5 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { IdParam, SingleOffer, SingleReview } from '../../types/types';
-import { filterCity } from '../../utils/utils-components';
+import { IdParam, SingleOffer } from '../../types/types';
 import Header from '../general/header';
 import HotelCard from '../general/hotel-card/hotel-card';
 import Map from '../map/map';
@@ -13,23 +12,42 @@ import {
   LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS,
   LIMITED_NUMBER_OF_PHOTOS,
   LIMITED_NUMBER_OF_REVIEWS,
-  MapClassName, PlaceCard
+  MapClassName,
+  PlaceCard
 } from '../../const';
+import * as selector from '../../store/selector';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGetReviewsAction, fetchPropertyAction } from '../../store/api-actions';
 
-function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[]}): JSX.Element {
-  const {accommodations, reviews} = props;
+function Property (): JSX.Element {
   const {id} = useParams<IdParam>();
-  const accommodation = accommodations.find((line) => String(line.id) === id);
+  const dispatch = useDispatch();
+  dispatch(fetchGetReviewsAction(Number(id)));
 
-  if (accommodation === undefined) {
+  const accommodationFromFetch = useSelector(selector.getProperty);
+  const reviews = useSelector(selector.getReviews);
+  const nearestAccommodations = useSelector(selector.getNearbyOffers)
+    .splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS);
+
+  const accommodations = useSelector(selector.getOffers);
+  const accommodationFromList = accommodations.find((line) => String(line.id) === id);
+
+  let accommodation: SingleOffer | null;
+  if (accommodationFromList && id) {
+    accommodation = accommodationFromList;
+  } else if (accommodations === [] && id) {
+    dispatch(fetchPropertyAction(Number(id)));
+    accommodation = accommodationFromFetch;
+  } else {
+    return <Navigate to={AppRoutes.NotAvailable}/>;
+  }
+
+  if (!accommodation) {
     return <Navigate to={AppRoutes.NotAvailable}/>;
   }
 
   const {propertyPhotos, isPremium} = accommodation;
-
-  const cityName = accommodation.city.name;
   const idCard = accommodation.id;
-  const nearestAccommodations = filterCity(cityName, accommodations).splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS);
 
   return (
     <div className="page">
@@ -45,7 +63,6 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
                 .map((line) => <PropertyImg urlImg={line} key={line}/>)}
             </div>
           </div>
-
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium ? <div className="property__mark"><span>Premium</span></div> : ''}
@@ -54,7 +71,7 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
                 <h2 className="reviews__title">
                   Reviews &middot;
                   <span className="reviews__amount">
-                    {reviews.length > LIMITED_NUMBER_OF_REVIEWS ? '10' : reviews.length}
+                    {reviews.length > LIMITED_NUMBER_OF_REVIEWS ? LIMITED_NUMBER_OF_REVIEWS : reviews.length}
                   </span>
                 </h2>
                 <ul className="reviews__list">
@@ -68,7 +85,6 @@ function Property (props: {accommodations: SingleOffer[], reviews: SingleReview[
               </section>
             </div>
           </div>
-
           <Map positionClass={MapClassName.Property} propertyTownInfo={accommodation}/>
         </section>
 

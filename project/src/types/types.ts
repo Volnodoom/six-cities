@@ -1,4 +1,3 @@
-
 export type SingleOffer = {
   id:number,
   city: {
@@ -11,20 +10,15 @@ export type SingleOffer = {
   },
   bedrooms: number,
   adultsNumber: number,
-  // max_adults have been changed to adultsNumber (need use adapter)
   price: number,
   rating: number,
-  //type => accommodationType
   accommodationType: string,
   title: string,
   description: string,
   goods: string[],
-  // is keys have been changed from is_X to isX (need use adapter)
   isFavorite: boolean,
   isPremium: boolean,
-  // have been changed from preview_image to propertyPreview (need use adapter)
   propertyPreview: string,
-  // have been changed from images to propertyPhotos (need use adapter)
   propertyPhotos: string[],
   location: {
     latitude: number,
@@ -32,10 +26,43 @@ export type SingleOffer = {
     zoom: number,
   },
   host: {
-    // avatar_url => avatarImg
     avatarImg: string,
     id: number,
-    // is_pro => isPro
+    isPro: boolean,
+    name: string,
+  },
+};
+
+export type RawOffer = {
+  id:number,
+  city: {
+    name: string,
+    location: {
+      latitude: number,
+      longitude: number,
+      zoom: number,
+    },
+  },
+  bedrooms: number,
+  maxAdults?: number,
+  price: number,
+  rating: number,
+  type?: string,
+  title: string,
+  description: string,
+  goods: string[],
+  isFavorite: boolean,
+  isPremium: boolean,
+  previewImage?: string,
+  images?: string[],
+  location: {
+    latitude: number,
+    longitude: number,
+    zoom: number,
+  },
+  host: {
+    avatarUrl?: string,
+    id: number,
     isPro: boolean,
     name: string,
   },
@@ -53,6 +80,19 @@ export type SingleReview = {
     id: number,
     // is_pro => isPro
     isPro: boolean,
+    name: string,
+  },
+};
+
+export type RawReview = {
+  id: number,
+  comment: string,
+  date?: Date,
+  rating: number,
+  user: {
+    avatar_url?: string,
+    id: number,
+    'is_pro'?: boolean,
     name: string,
   },
 };

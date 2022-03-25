@@ -1,5 +1,5 @@
 import { DivIcon, Map, Marker } from 'leaflet';
-import { HUNDRED, STARS_NUMBER, STAR_STEP, TEN } from '../const';
+import { AuthorizationStatus, HUNDRED, STARS_NUMBER, STAR_STEP, TEN } from '../const';
 import { SingleOffer } from '../types/types';
 
 export const getStarRating = (rating: number): number => {
@@ -40,3 +40,6 @@ export const sortTopRate = (list: SingleOffer[]):SingleOffer[] =>
   list
     .slice()
     .sort((valueA, valueB) => valueB.rating - valueA.rating);
+
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
