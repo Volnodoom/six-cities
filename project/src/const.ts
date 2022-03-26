@@ -112,3 +112,9 @@ export enum HTTP_CODE {
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
+
+export const ErrorMessageContentPassword = [
+  'Current password does not contain any numbers. Please, add any number to make it safer.',
+  'Current password does not contain any letters. Please, add any Latin letter to make it safer.',
+  'Your password should not contain any spaces. Please, remove it',
+];
