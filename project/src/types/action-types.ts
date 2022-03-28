@@ -1,5 +1,5 @@
 
-export enum ActionType {
+export enum ActionTypes {
   requireAuthorization = 'user/requireAuthorization',
   userInformation = 'user/userInformation',
   setError = 'server/setError',
@@ -10,4 +10,5 @@ export enum ActionType {
   reviews = 'propertyData/reviews',
   property = 'propertyData/property',
   nearbyOffers = 'propertyData/nearbyOffers',
+  redirect = 'app/redirectToRoute',
 }

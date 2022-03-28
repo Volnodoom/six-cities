@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AppRoutes } from '../../const';
 import { isCheckedAuth } from '../../utils/utils-components';
 import Favorites from '../favorites/favorites';
@@ -10,6 +10,8 @@ import Property from '../property/property';
 import NotAvailablePage from '../routing/not-available-page';
 import PrivateRoute from '../routing/private-route';
 import * as selector from '../../store/selector';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App (): JSX.Element {
   const authorizationStatus = useSelector(selector.getAuthorizationStatus);
@@ -22,7 +24,7 @@ function App (): JSX.Element {
   }
 
   return(
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoutes.Root}
@@ -49,7 +51,7 @@ function App (): JSX.Element {
           element={<NotAvailablePage/>}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
