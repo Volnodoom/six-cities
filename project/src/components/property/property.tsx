@@ -1,53 +1,50 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { IdParam, SingleOffer } from '../../types/types';
+import { IdParam
+  // SingleOffer
+} from '../../types/types';
 import Header from '../general/header';
-import HotelCard from '../general/hotel-card/hotel-card';
-import Map from '../map/map';
+// import HotelCard from '../general/hotel-card/hotel-card';
+// import Map from '../map/map';
 import PropertyCommentForm from './property-comment-form';
 import PropertyContent from './property-content';
 import PropertyImg from './property-img';
-import PropertyReviewBox from './property-review-box';
-import {
-  AppRoutes,
-  LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS,
-  LIMITED_NUMBER_OF_PHOTOS,
-  LIMITED_NUMBER_OF_REVIEWS,
-  MapClassName,
-  PlaceCard
-} from '../../const';
+// import PropertyReviewBox from './property-review-box';
 import * as selector from '../../store/selector';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGetReviewsAction, fetchPropertyAction } from '../../store/api-actions';
+import { fetchGetReviewsAction, fetchNearbyOffersAction, fetchPropertyAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import {
+  AppRoutes,
+  // LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS,
+  LIMITED_NUMBER_OF_PHOTOS,
+  LIMITED_NUMBER_OF_REVIEWS
+  // MapClassName,
+  // PlaceCard
+} from '../../const';
 
 function Property (): JSX.Element {
   const {id} = useParams<IdParam>();
   const dispatch = useDispatch();
-  dispatch(fetchGetReviewsAction(Number(id)));
 
-  const accommodationFromFetch = useSelector(selector.getProperty);
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchGetReviewsAction(Number(id)));
+      dispatch(fetchNearbyOffersAction(Number(id)));
+      dispatch(fetchPropertyAction(Number(id)));
+    }
+  },[dispatch, id]);
+
+  const accommodation = useSelector(selector.getProperty);
   const reviews = useSelector(selector.getReviews);
-  const nearestAccommodations = useSelector(selector.getNearbyOffers)
-    .splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS);
-
-  const accommodations = useSelector(selector.getOffers);
-  const accommodationFromList = accommodations.find((line) => String(line.id) === id);
-
-  let accommodation: SingleOffer | null;
-  if (accommodationFromList && id) {
-    accommodation = accommodationFromList;
-  } else if (accommodations === [] && id) {
-    dispatch(fetchPropertyAction(Number(id)));
-    accommodation = accommodationFromFetch;
-  } else {
-    return <Navigate to={AppRoutes.NotAvailable}/>;
-  }
+  // const nearestAccommodations = useSelector(selector.getNearbyOffers)
+  //   .slice()
+  //   .splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS);
 
   if (!accommodation) {
     return <Navigate to={AppRoutes.NotAvailable}/>;
   }
 
   const {propertyPhotos, isPremium} = accommodation;
-  const idCard = accommodation.id;
 
   return (
     <div className="page">
@@ -75,25 +72,29 @@ function Property (): JSX.Element {
                   </span>
                 </h2>
                 <ul className="reviews__list">
-                  {reviews
-                    .sort((a, b) => Date.parse(String(b.reviewDate)) - Date.parse(String(a.reviewDate)))
-                    .slice()
-                    .splice(0, LIMITED_NUMBER_OF_REVIEWS)
-                    .map((line) => <PropertyReviewBox review={line} key={line.id}/>)}
+                  {/* {
+                    reviews.length > 0
+                      ? reviews
+                        .slice()
+                        .sort((a, b) => Date.parse(String(b.reviewDate)) - Date.parse(String(a.reviewDate)))
+                        .splice(0, LIMITED_NUMBER_OF_REVIEWS)
+                        .map((line) => <PropertyReviewBox review={line} key={line.id}/>)
+                      : <li className="reviews__item">No reviews have been published yet.</li>
+                  } */}
                 </ul>
                 <PropertyCommentForm/>
               </section>
             </div>
           </div>
-          <Map positionClass={MapClassName.Property} propertyTownInfo={accommodation}/>
+          {/* <Map positionClass={MapClassName.Property} propertyTownInfo={accommodation}/> */}
         </section>
 
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearestAccommodations
-                .map((line) => <HotelCard accommodationInfo={line} cardKind={PlaceCard.Property} key={idCard}/>)}
+              {/* {nearestAccommodations
+                .map((line) => <HotelCard accommodationInfo={line} cardKind={PlaceCard.Property} key={line.id}/>)} */}
             </div>
           </section>
         </div>

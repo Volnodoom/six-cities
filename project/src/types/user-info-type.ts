@@ -16,7 +16,7 @@ export type RawUserData = {
   id: number,
   email: string,
   token: string,
-  'avatar_url'?: string,
+  avatarUrl?: string,
   name: string,
-  'is_pro'?: boolean,
+  isPro: boolean,
 }

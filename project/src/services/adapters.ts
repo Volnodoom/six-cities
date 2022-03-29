@@ -30,14 +30,12 @@ export const adaptReviewToClient = (review: RawReview): SingleReview => {
     reviewDate: review.date ?? new Date(),
     user: {
       ...review.user,
-      avatarImg: String(review.user['avatar_url']),
-      isPro: Boolean(review.user['is_pro']),
+      avatarImg: String(review.user.avatarUrl),
     },
   };
 
   delete adaptedData.date;
-  delete adaptedData.user['avatar_url'];
-  delete adaptedData.user['is_pro'];
+  delete adaptedData.user.avatarUrl;
 
   return adaptedData;
 };
@@ -45,12 +43,10 @@ export const adaptReviewToClient = (review: RawReview): SingleReview => {
 export const adaptUserInfoToClient = (user: RawUserData): UserData => {
   const adaptedData = {
     ...user,
-    avatar: String(user['avatar_url']),
-    isPro: Boolean(user['is_pro']),
+    avatar: String(user.avatarUrl),
   };
 
-  delete adaptedData['is_pro'];
-  delete adaptedData['avatar_url'];
+  delete adaptedData.avatarUrl;
 
   return adaptedData;
 };

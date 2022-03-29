@@ -1,6 +1,8 @@
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { MouseEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus, LogoPosition } from '../../const';
+import { logoutAction } from '../../store/api-actions';
 import * as selector from '../../store/selector';
 import Logo from './logo';
 
@@ -14,6 +16,15 @@ function Header(props: HeaderProps): JSX.Element {
   const authorizationStatus = useSelector(selector.getAuthorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const userData = useSelector(selector.getUserInfo);
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleClick = (evt: MouseEvent<HTMLAnchorElement>) =>{
+    dispatch(logoutAction());
+    if(location.pathname !== AppRoutes.Favorites) {
+      evt.preventDefault();
+    }
+  };
 
   return (
     <header className="header">
@@ -32,7 +43,7 @@ function Header(props: HeaderProps): JSX.Element {
                   {
                     isAuthorized
                       ?
-                      <span className="header__user-name user__name">{userData && userData.email}</span>
+                      <span className="header__user-name user__name">{userData?.email}</span>
                       :
                       <span className="header__login">Sign in</span>
                   }
@@ -42,9 +53,9 @@ function Header(props: HeaderProps): JSX.Element {
                 isAuthorized
                 &&
                 <li className="header__nav-item">
-                  <a href="/" className="header__nav-link">
+                  <Link to={AppRoutes.Root} className="header__nav-link" onClick={handleClick}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               }
             </ul>

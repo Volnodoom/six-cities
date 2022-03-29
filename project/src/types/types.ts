@@ -71,14 +71,11 @@ export type RawOffer = {
 export type SingleReview = {
   id: number,
   comment: string,
-  //date => reviewDate
   reviewDate: Date,
   rating: number,
   user: {
-    // avatar_url => avatarImg
     avatarImg: string,
     id: number,
-    // is_pro => isPro
     isPro: boolean,
     name: string,
   },
@@ -90,9 +87,9 @@ export type RawReview = {
   date?: Date,
   rating: number,
   user: {
-    avatar_url?: string,
+    avatarUrl?: string,
     id: number,
-    'is_pro'?: boolean,
+    isPro: boolean,
     name: string,
   },
 };

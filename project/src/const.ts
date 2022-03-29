@@ -28,7 +28,7 @@ export const APIRoutes = {
   Offers: '/hotels',
   Reviews: (id:number) => `/comments/${id}`,
   Property: (id:number) => `/hotels/${id}`,
-  nearbyOffers: (id:number) => `/comments/${id}/nearby`,
+  nearbyOffers: (id:number) => `/hotels/${id}/nearby`,
 } as const;
 
 export const AppRoutes = {

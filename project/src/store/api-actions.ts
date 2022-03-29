@@ -77,8 +77,6 @@ export const fetchGetReviewsAction = createAsyncThunk(
   'data/fetchGetReviews',
   async (id:number) => {
     try {
-      // eslint-disable-next-line no-debugger
-      debugger;
       const {data} = await api.get<RawReview[]>(APIRoutes.Reviews(id));
       const adaptedData = data.map((line) => adaptReviewToClient(line));
       store.dispatch(reviews(adaptedData));
@@ -131,9 +129,7 @@ export const fetchUserDataAction = createAsyncThunk(
   'data/fetchUserData',
   async () => {
     try {
-      // eslint-disable-next-line no-debugger
-      debugger;
-      const {data} = await api.get<RawUserData>(APIRoutes.Offers);
+      const {data} = await api.get<RawUserData>(APIRoutes.Login);
       const adaptedData =  adaptUserInfoToClient(data);
       store.dispatch(userInformation(adaptedData));
     } catch (error) {
