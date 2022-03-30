@@ -118,3 +118,21 @@ export const ErrorMessageContentPassword = [
   'Current password does not contain any letters. Please, add any Latin letter to make it safer.',
   'Your password should not contain any spaces. Please, remove it',
 ];
+
+export enum NameSpace {
+  DataOffers = 'DataOFFERS',
+  DataProperty = 'DataPROPERTY',
+  DataUser = 'DataUSER',
+}
+
+export enum LoadingStatus {
+  Idle = 'idle',
+  Loading = 'loading',
+  Succeeded = 'succeeded',
+  Failed = 'failed',
+}
+
+export enum ApiActions {
+  FetchOffers = 'data/fetchOffers',
+  FetchPropertyData = 'data/fetchPropertyData',
+}
