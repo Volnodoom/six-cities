@@ -19,10 +19,13 @@ export const dataUser = createSlice({
     userInformation: (state, action) => {
       state.userInformation = action.payload;
     },
-    setError: (state, action) => {
+    setErrorUser: (state, action) => {
       state.errorUser = action.payload;
+    },
+    setLoadingUserStatus: (state, action) => {
+      state.loadingUserStatus = action.payload;
     },
   },
 });
 
-export const {requireAuthorization, userInformation} = dataUser.actions;
+export const {requireAuthorization, userInformation, setErrorUser, setLoadingUserStatus} = dataUser.actions;

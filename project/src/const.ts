@@ -5,7 +5,7 @@ export const STARS_NUMBER = 5;
 export const LIMITED_NUMBER_OF_PHOTOS = 6;
 export const LIMITED_NUMBER_OF_REVIEWS = 10;
 export const LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS = 3;
-export const MONTH_FORMAT:{month: 'long'} = {month: 'long'};
+export const MONTH_FORMAT: { month: 'long' } = { month: 'long' };
 export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
 export const PIN_ON_MAP_SIZE = [28, 40];
 export const PIN_ON_MAP_ANCHOR = [14, 40];
@@ -13,8 +13,10 @@ export const BACKEND_URL = 'https://9.react.pages.academy/six-cities';
 export const REQUEST_TIMEOUT = 5000;
 export const TIMEOUT_SHOW_ERROR = 3000;
 export const AUTH_TOKEN_KEY_NAME = 'guess-six-sites-token';
+export const REDIRECT_GLOBAL = 'global/redirectToRoute';
+export const CLEAR_ERROR = 'data/clearError';
 
-export enum SortingLabel  {
+export enum SortingLabel {
   Popular = 'Popular',
   Low = 'Price: low to high',
   High = 'Price: high to low',
@@ -26,16 +28,16 @@ export const APIRoutes = {
   Login: '/login',
   Logout: '/logout',
   Offers: '/hotels',
-  Reviews: (id:number) => `/comments/${id}`,
-  Property: (id:number) => `/hotels/${id}`,
-  nearbyOffers: (id:number) => `/hotels/${id}/nearby`,
+  Reviews: (id: number) => `/comments/${id}`,
+  Property: (id: number) => `/hotels/${id}`,
+  nearbyOffers: (id: number) => `/hotels/${id}/nearby`,
 } as const;
 
 export const AppRoutes = {
   Login: '/login',
   Root: '/',
   Favorites: '/favorites',
-  Property: (id:number | string = ':id') => `/offer/${id}`,
+  Property: (id: number | string = ':id') => `/offer/${id}`,
   Empty: '',
   NotAvailable: '*',
 } as const;
@@ -120,9 +122,9 @@ export const ErrorMessageContentPassword = [
 ];
 
 export enum NameSpace {
-  DataOffers = 'DataOFFERS',
-  DataProperty = 'DataPROPERTY',
-  DataUser = 'DataUSER',
+  DataOffers = 'DATA_OFFERS',
+  DataProperty = 'DATA_PROPERTY',
+  DataUser = 'DATA_USER',
 }
 
 export enum LoadingStatus {
@@ -135,4 +137,9 @@ export enum LoadingStatus {
 export enum ApiActions {
   FetchOffers = 'data/fetchOffers',
   FetchPropertyData = 'data/fetchPropertyData',
+  FetchUserData = 'data/fetchUserData',
+  CheckAuthorization = 'user/checkAuth',
+  PostLogin = 'user/login',
+  Logout = 'user/logout',
+
 }

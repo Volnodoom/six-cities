@@ -37,7 +37,6 @@ export const dataOffers = createSlice({
   reducers: {
     listOffers: (state, action) => {
       state.listOffers = action.payload;
-      // state.isDataLoaded = true;
     },
     currentCity: (state, action) => {
       state.currentCity = action.payload;
@@ -45,7 +44,7 @@ export const dataOffers = createSlice({
     listOffersForCity: (state, action) => {
       state.listOffersForCity = action.payload;
     },
-    setError: (state, action) => {
+    setErrorOffers: (state, action) => {
       state.errorOffers = action.payload;
     },
   },
@@ -57,11 +56,10 @@ export const dataOffers = createSlice({
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.loadingOffersStatus = LoadingStatus.Succeeded;
       })
-      .addCase(fetchOffersAction.pending, (state, action) => {
+      .addCase(fetchOffersAction.rejected, (state, action) => {
         state.loadingOffersStatus = LoadingStatus.Failed;
       });
-
   },
 });
 
-export const {listOffers, currentCity, listOffersForCity} = dataOffers.actions;
+export const {listOffers, currentCity, listOffersForCity, setErrorOffers} = dataOffers.actions;

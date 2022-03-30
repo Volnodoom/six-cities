@@ -1,9 +1,11 @@
 import { ErrorType } from '../types/error-types';
 import request from 'axios';
-import { HTTP_CODE } from '../const';
+import { HTTP_CODE, LoadingStatus } from '../const';
 import { store } from '../store';
-import { setError } from '../store/action';
 import { clearErrorAction } from '../store/api-actions';
+import { setErrorUser } from '../store/data-user/data-user';
+import { setErrorOffers } from '../store/data-offers/data-offers';
+import { setErrorProperty } from '../store/data-property/data-property';
 
 export const errorHandle = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {
@@ -11,8 +13,16 @@ export const errorHandle = (error: ErrorType): void => {
   }
 
   const handleError = (message: string) => {
-    store.dispatch(setError(message));
-    store.dispatch(clearErrorAction());
+    if (store.getState().DATA_USER.loadingUserStatus === LoadingStatus.Failed) {
+      store.dispatch(setErrorUser(message));
+      store.dispatch(clearErrorAction());
+    } else if (store.getState().DATA_OFFERS.loadingOffersStatus === LoadingStatus.Failed) {
+      store.dispatch(setErrorOffers(message));
+      store.dispatch(clearErrorAction());
+    } else if (store.getState().DATA_PROPERTY.loadingPropertyStatus === LoadingStatus.Failed) {
+      store.dispatch(setErrorProperty(message));
+      store.dispatch(clearErrorAction());
+    }
   };
 
   const {response} = error;

@@ -11,26 +11,30 @@ import PropertyImg from './property-img';
 // import PropertyReviewBox from './property-review-box';
 import * as selector from '../../store/selector';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGetReviewsAction, fetchNearbyOffersAction, fetchPropertyAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import {
   AppRoutes,
   // LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS,
   LIMITED_NUMBER_OF_PHOTOS,
-  LIMITED_NUMBER_OF_REVIEWS
+  LIMITED_NUMBER_OF_REVIEWS,
+  LoadingStatus
   // MapClassName,
   // PlaceCard
 } from '../../const';
+import { isCheckedAuth } from '../../utils/utils-components';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { fetchPropertyDataAction } from '../../store/data-property/data-property';
 
 function Property (): JSX.Element {
+  const authorizationStatus = useSelector(selector.getAuthorizationStatus);
+  const isPropertyLoaded = useSelector(selector.getPropertyLoadingStatus) === LoadingStatus.Succeeded;
+  const isPropertyCrashed = useSelector(selector.getPropertyLoadingStatus) === LoadingStatus.Failed;
   const {id} = useParams<IdParam>();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchGetReviewsAction(Number(id)));
-      dispatch(fetchNearbyOffersAction(Number(id)));
-      dispatch(fetchPropertyAction(Number(id)));
+      dispatch(fetchPropertyDataAction(Number(id)));
     }
   },[dispatch, id]);
 
@@ -40,7 +44,14 @@ function Property (): JSX.Element {
   //   .slice()
   //   .splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS);
 
-  if (!accommodation) {
+
+  if (isCheckedAuth(authorizationStatus) || !isPropertyLoaded || !accommodation) {
+    return(
+      <LoadingScreen />
+    );
+  }
+
+  if (isPropertyCrashed) {
     return <Navigate to={AppRoutes.NotAvailable}/>;
   }
 

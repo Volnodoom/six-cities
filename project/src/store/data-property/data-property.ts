@@ -57,16 +57,16 @@ export const dataProperty = createSlice({
   name: NameSpace.DataProperty,
   initialState,
   reducers: {
-    reviews: (state, action) => {
-      state.reviews = action.payload;
-    },
     property: (state, action) => {
       state.property = action.payload;
+    },
+    reviews: (state, action) => {
+      state.reviews = action.payload;
     },
     nearbyOffers: (state, action) => {
       state.nearbyOffers = action.payload;
     },
-    setError: (state, action) => {
+    setErrorProperty: (state, action) => {
       state.errorProperty = action.payload;
     },
   },
@@ -85,4 +85,4 @@ export const dataProperty = createSlice({
   },
 });
 
-export const {reviews, property, nearbyOffers, setError} = dataProperty.actions;
+export const {reviews, property, nearbyOffers, setErrorProperty} = dataProperty.actions;

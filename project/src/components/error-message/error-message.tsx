@@ -3,11 +3,21 @@ import * as selector from '../../store/selector';
 import { divStyleErrorMsg } from './style-error-msg';
 
 function ErrorMessage (): JSX.Element | null {
-  const error = useSelector(selector.getError);
+  const errorUser = useSelector(selector.getUserError);
+  const errorOffers = useSelector(selector.getOffersError);
+  const errorProperty = useSelector(selector.getPropertyError);
 
-  if(error) {
+  if (errorUser) {
     return (
-      <div style={divStyleErrorMsg}>{error}</div>
+      <div style={divStyleErrorMsg}>{errorUser}</div>
+    );
+  } else if (errorOffers) {
+    return (
+      <div style={divStyleErrorMsg}>{errorOffers}</div>
+    );
+  } else if (errorProperty) {
+    return (
+      <div style={divStyleErrorMsg}>{errorProperty}</div>
     );
   }
 

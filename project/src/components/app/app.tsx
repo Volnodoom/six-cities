@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
-import { AppRoutes } from '../../const';
+import { AppRoutes, LoadingStatus } from '../../const';
 import { isCheckedAuth } from '../../utils/utils-components';
-import Favorites from '../favorites/favorites';
+// import Favorites from '../favorites/favorites';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Login from '../login/login';
 import Main from '../main/main';
@@ -15,9 +15,9 @@ import browserHistory from '../../browser-history';
 
 function App (): JSX.Element {
   const authorizationStatus = useSelector(selector.getAuthorizationStatus);
-  const isDataLoaded = useSelector(selector.getIsDataLoadedStatus);
+  const isOfferLoaded = useSelector(selector.getOffersLoadingStatus) === LoadingStatus.Succeeded;
 
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus) || !isOfferLoaded) {
     return(
       <LoadingScreen />
     );
@@ -42,14 +42,14 @@ function App (): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route
+        {/* <Route
           path={AppRoutes.Favorites}
           element={
             <PrivateRoute privatePath={AppRoutes.Favorites}>
               <Favorites />
             </PrivateRoute>
           }
-        />
+        /> */}
         <Route
           path="*"
           element={<NotAvailablePage/>}
