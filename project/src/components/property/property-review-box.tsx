@@ -1,4 +1,4 @@
-import { DATE_TIME_FORMAT_USA_STYLE, MONTH_FORMAT } from '../../const';
+import { DATE_TIME_FORMAT_USA_STYLE, ReviewDateTimeFormat } from '../../const';
 import { SingleReview } from '../../types/types';
 import StarRating from '../general/star-rating';
 
@@ -10,6 +10,8 @@ function PropertyReviewBox (props: {review: SingleReview}): JSX.Element {
   } = props.review;
   const {avatarImg} = props.review.user;
   const userName = props.review.user.name;
+
+  const formattedDateToClient = new Date(reviewDate).toLocaleDateString(DATE_TIME_FORMAT_USA_STYLE, ReviewDateTimeFormat);
 
   return (
     <li className="reviews__item">
@@ -29,8 +31,8 @@ function PropertyReviewBox (props: {review: SingleReview}): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">{comment}</p>
-        <time className="reviews__time" dateTime={`${reviewDate.getFullYear()} ${reviewDate.getMonth()} ${reviewDate.getDay()}`}>
-          {`${new Intl.DateTimeFormat(DATE_TIME_FORMAT_USA_STYLE, MONTH_FORMAT).format(reviewDate)} ${reviewDate.getFullYear()}`}
+        <time className="reviews__time" dateTime={`${reviewDate}`}>
+          {formattedDateToClient}
         </time>
       </div>
 

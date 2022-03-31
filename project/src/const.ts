@@ -5,7 +5,6 @@ export const STARS_NUMBER = 5;
 export const LIMITED_NUMBER_OF_PHOTOS = 6;
 export const LIMITED_NUMBER_OF_REVIEWS = 10;
 export const LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS = 3;
-export const MONTH_FORMAT: { month: 'long' } = { month: 'long' };
 export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
 export const PIN_ON_MAP_SIZE = [28, 40];
 export const PIN_ON_MAP_ANCHOR = [14, 40];
@@ -143,3 +142,8 @@ export enum ApiActions {
   Logout = 'user/logout',
 
 }
+
+export const ReviewDateTimeFormat = {
+  month: 'long',
+  year: 'numeric',
+} as const;

@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoutes, AuthorizationStatus, LogoPosition } from '../../const';
+import { AppRoutes, LogoPosition } from '../../const';
 import { logoutAction } from '../../store/api-actions';
 import * as selector from '../../store/selector';
 import Logo from './logo';
@@ -13,8 +13,7 @@ type HeaderProps = {
 
 function Header(props: HeaderProps): JSX.Element {
   const {logo, mainPage} = props;
-  const authorizationStatus = useSelector(selector.getAuthorizationStatus);
-  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+  const isAuthorized = useSelector(selector.getIsAuthorized);
   const userData = useSelector(selector.getUserInfo);
   const location = useLocation();
   const dispatch = useDispatch();

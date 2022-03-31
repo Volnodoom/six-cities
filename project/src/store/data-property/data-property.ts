@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { ApiActions, APIRoutes, LoadingStatus, NameSpace } from '../../const';
+import { ApiActions, APIRoutes, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS, LoadingStatus, NameSpace } from '../../const';
 import { adaptOfferToClient, adaptReviewToClient } from '../../services/adapters';
 import { errorHandle } from '../../services/error-handle';
 import { AppDispatch, DataProperty, State } from '../../types/state';
@@ -44,7 +44,10 @@ export const fetchPropertyDataAction = createAsyncThunk<void, number, {
 
       dispatch(
         nearbyOffers(
-          nearbyResult.data.map((line) => adaptOfferToClient(line)),
+          nearbyResult.data
+            .slice()
+            .splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS)
+            .map((line) => adaptOfferToClient(line)),
         ),
       );
     } catch (error) {

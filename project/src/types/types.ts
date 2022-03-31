@@ -96,18 +96,17 @@ export type RawReview = {
 
 export type CityMainName = {name: string}
 export type Location = {
-  location: {
     latitude: number,
     longitude: number,
     zoom: number,
-  }
 }
 
 export type CityMainDetails = CityMainName & Location
 
 
-export type AccommodationLocation = Location & {
-  isCardPointed: boolean;
+export type HighlightCardInfo = {
+  isCardHighlighted: boolean;
+  card: SingleOffer;
 }
 
 export type IdParam = {id: string};

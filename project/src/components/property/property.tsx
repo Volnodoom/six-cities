@@ -1,32 +1,23 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { IdParam
-  // SingleOffer
-} from '../../types/types';
+import { IdParam } from '../../types/types';
 import Header from '../general/header';
-// import HotelCard from '../general/hotel-card/hotel-card';
-// import Map from '../map/map';
+import HotelCard from '../general/hotel-card/hotel-card';
 import PropertyCommentForm from './property-comment-form';
 import PropertyContent from './property-content';
 import PropertyImg from './property-img';
-// import PropertyReviewBox from './property-review-box';
+import PropertyReviewBox from './property-review-box';
 import * as selector from '../../store/selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import {
-  AppRoutes,
-  // LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS,
-  LIMITED_NUMBER_OF_PHOTOS,
-  LIMITED_NUMBER_OF_REVIEWS,
-  LoadingStatus
-  // MapClassName,
-  // PlaceCard
-} from '../../const';
+import { AppRoutes, LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, LoadingStatus, MapClassName, PlaceCard } from '../../const';
 import { isCheckedAuth } from '../../utils/utils-components';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchPropertyDataAction } from '../../store/data-property/data-property';
+import MapComponent from '../map/map-component';
 
 function Property (): JSX.Element {
   const authorizationStatus = useSelector(selector.getAuthorizationStatus);
+  const isAuthorized = useSelector(selector.getIsAuthorized);
   const isPropertyLoaded = useSelector(selector.getPropertyLoadingStatus) === LoadingStatus.Succeeded;
   const isPropertyCrashed = useSelector(selector.getPropertyLoadingStatus) === LoadingStatus.Failed;
   const {id} = useParams<IdParam>();
@@ -40,10 +31,7 @@ function Property (): JSX.Element {
 
   const accommodation = useSelector(selector.getProperty);
   const reviews = useSelector(selector.getReviews);
-  // const nearestAccommodations = useSelector(selector.getNearbyOffers)
-  //   .slice()
-  //   .splice(0, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS);
-
+  const nearestAccommodations = useSelector(selector.getNearbyOffers);
 
   if (isCheckedAuth(authorizationStatus) || !isPropertyLoaded || !accommodation) {
     return(
@@ -83,7 +71,7 @@ function Property (): JSX.Element {
                   </span>
                 </h2>
                 <ul className="reviews__list">
-                  {/* {
+                  {
                     reviews.length > 0
                       ? reviews
                         .slice()
@@ -91,21 +79,21 @@ function Property (): JSX.Element {
                         .splice(0, LIMITED_NUMBER_OF_REVIEWS)
                         .map((line) => <PropertyReviewBox review={line} key={line.id}/>)
                       : <li className="reviews__item">No reviews have been published yet.</li>
-                  } */}
+                  }
                 </ul>
-                <PropertyCommentForm/>
+                {isAuthorized && <PropertyCommentForm/>}
               </section>
             </div>
           </div>
-          {/* <Map positionClass={MapClassName.Property} propertyTownInfo={accommodation}/> */}
+          <MapComponent mapKind={MapClassName.Property} />
         </section>
 
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {/* {nearestAccommodations
-                .map((line) => <HotelCard accommodationInfo={line} cardKind={PlaceCard.Property} key={line.id}/>)} */}
+              {nearestAccommodations
+                .map((line) => <HotelCard accommodationInfo={line} cardKind={PlaceCard.Property} key={line.id}/>)}
             </div>
           </section>
         </div>

@@ -1,17 +1,17 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { MapClassName,PlaceCard, SortingLabel } from '../../const';
-import { AccommodationLocation } from '../../types/types';
+import { HighlightCardInfo } from '../../types/types';
 import * as selector from '../../store/selector';
 import HotelCard from '../general/hotel-card/hotel-card';
-import Map from '../map/map';
 import { sortHighToLow, sortLowToHigh, sortTopRate } from '../../utils/utils-components';
+import MapComponent from '../map/map-component';
 
 function MainContent (): JSX.Element {
   const cityAccommodations = useSelector(selector.getOffersForCity);
   const [currentSortType, setCurrentSortType] = useState(SortingLabel.Popular);
 
-  const [mouseEnteredCard, setMouseEnteredCard] = useState<AccommodationLocation | null>(null);
+  const [mouseEnteredCard, setMouseEnteredCard] = useState<HighlightCardInfo | null>(null);
   const [isOptionSelected, setIsOptionSelected] = useState(false);
 
   const ulRef = useRef<HTMLUListElement | null>(null);
@@ -81,7 +81,7 @@ function MainContent (): JSX.Element {
           {getOffersAccordingSort(currentSortType)
             .map((offer) => (
               <HotelCard
-                onMouseIn={(offerCard: AccommodationLocation | null) => setMouseEnteredCard(offerCard)}
+                onMouseIn={(offerCard: HighlightCardInfo | null) => setMouseEnteredCard(offerCard)}
                 accommodationInfo={offer}
                 cardKind={PlaceCard.Main}
                 key={offer.id}
@@ -90,7 +90,7 @@ function MainContent (): JSX.Element {
 
       </section>
       <div className="cities__right-section">
-        <Map positionClass={MapClassName.Main} pointedCard={mouseEnteredCard}/>
+        <MapComponent mapKind={MapClassName.Main} highlightedCardMain={mouseEnteredCard}/>
       </div>
     </div>
   );
