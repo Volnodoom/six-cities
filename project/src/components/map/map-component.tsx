@@ -26,12 +26,13 @@ function MapComponent (props: MapProps): JSX.Element {
   const isOnProperty = mapKind === MapClassName.Property;
   const mainCityLocation = accommodations[0]?.city.location;
 
-  const mapMain = useMap(mapRef, mainCityLocation);
-  const mapProperty = useMap(mapRef, property?.location);
+  const mapGeneral = useMap(mapRef, isOnMain ? mainCityLocation : property?.location);
+
+  const pins = new Map();
 
   useEffect( () => {
-    if (mapMain) {
-      mapMain.flyTo(
+    if (mapGeneral && isOnMain) {
+      mapGeneral.flyTo(
         [
           mainCityLocation.latitude,
           mainCityLocation.longitude,
@@ -39,10 +40,9 @@ function MapComponent (props: MapProps): JSX.Element {
         mainCityLocation.zoom,
       );
     }
-  }, [mapMain, mainCityLocation]);
+  }, [mainCityLocation]);
 
   useEffect(() => {
-    const pins = new Map();
 
     const selectedCustomIcon = new Icon({
       iconUrl: PinMarker.Selected,
@@ -64,32 +64,32 @@ function MapComponent (props: MapProps): JSX.Element {
       });
     };
 
-    if(mapMain && isOnMain) {
-      addPinsToMap(accommodations, mapMain);
+    if(mapGeneral && isOnMain) {
+      addPinsToMap(accommodations, mapGeneral);
       if (isCardHighlighted && highlightedCard) {
         const {latitude, longitude} =  highlightedCard.location;
-        const pinHighlighted = designPinOnMap(latitude, longitude, selectedCustomIcon, mapMain);
+        const pinHighlighted = designPinOnMap(latitude, longitude, selectedCustomIcon, mapGeneral);
         pins.set(`${highlightedCard.id} highlighted`, pinHighlighted);
       }
     }
 
-    if (mapProperty && isOnProperty && property) {
-      addPinsToMap(neabyOffers, mapProperty);
+    if (mapGeneral && isOnProperty && property) {
+      addPinsToMap(neabyOffers, mapGeneral);
       const {latitude, longitude} =  property.location;
-      const pinHighlighted = designPinOnMap(latitude, longitude, selectedCustomIcon, mapProperty);
+      const pinHighlighted = designPinOnMap(latitude, longitude, selectedCustomIcon, mapGeneral);
       pins.set(property.id, pinHighlighted);
     }
 
     return () => {
-      if (mapMain) {
+      if (mapGeneral && isOnMain) {
         pins.forEach((value: Marker, key) => {
-          mapMain.removeLayer(value);
+          mapGeneral.removeLayer(value);
         });
       }
 
-      if (mapProperty) {
+      if (mapGeneral && isOnProperty) {
         pins.forEach((value: Marker, key) => {
-          mapProperty.removeLayer(value);
+          mapGeneral.removeLayer(value);
         });
       }
       pins.clear();
