@@ -67,8 +67,6 @@ export const fetchUserReviewAction = createAsyncThunk<void, UserReviewType, {
     try {
       const {id} = getState().DATA_PROPERTY.property as SingleOffer;
       const {data} : AxiosResponse<RawReview[]> = await api.post(APIRoutes.Reviews(id), {comment, rating});
-      // eslint-disable-next-line no-console
-      console.log(data);
       dispatch(
         reviews(
           data.map((line ) => adaptReviewToClient(line)),

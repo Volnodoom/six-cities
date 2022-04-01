@@ -24,6 +24,21 @@ function MainContent (): JSX.Element {
     setCurrentSortType(SortingLabel.Popular);
   }, [cityAccommodations]);
 
+  const getOffersAccordingSort = (kind:SortingLabel) => {
+    switch (kind) {
+      case SortingLabel.Low:
+        return sortLowToHigh(cityAccommodations);
+      case SortingLabel.High:
+        return sortHighToLow(cityAccommodations);
+      case SortingLabel.TopRate:
+        return sortTopRate(cityAccommodations);
+      default:
+        return cityAccommodations;
+    }
+  };
+
+  const sortedOffers = getOffersAccordingSort(currentSortType);
+
   const handleSort = (evt: MouseEvent<HTMLLIElement>) => {
     const sortName = (evt.target as HTMLLIElement).textContent as SortingLabel;
     sortName && setCurrentSortType(sortName);
@@ -39,18 +54,7 @@ function MainContent (): JSX.Element {
     } else {setIsOptionSelected(false);}
   };
 
-  const getOffersAccordingSort = (kind:SortingLabel) => {
-    switch (kind) {
-      case SortingLabel.Low:
-        return sortLowToHigh(cityAccommodations);
-      case SortingLabel.High:
-        return sortHighToLow(cityAccommodations);
-      case SortingLabel.TopRate:
-        return sortTopRate(cityAccommodations);
-      default:
-        return cityAccommodations;
-    }
-  };
+  const handleCardHighlight = (offerCard: HighlightCardInfo | null) => setMouseEnteredCard(offerCard);
 
   return(
     <div className="cities__places-container container" onClick={handleSortBehavior}>
@@ -78,10 +82,10 @@ function MainContent (): JSX.Element {
         </form>
 
         <div className="cities__places-list places__list tabs__content">
-          {getOffersAccordingSort(currentSortType)
+          {sortedOffers
             .map((offer) => (
               <HotelCard
-                onMouseIn={(offerCard: HighlightCardInfo | null) => setMouseEnteredCard(offerCard)}
+                onMouseIn={handleCardHighlight}
                 accommodationInfo={offer}
                 cardKind={PlaceCard.Main}
                 key={offer.id}
