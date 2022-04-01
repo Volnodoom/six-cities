@@ -1,62 +1,86 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { HOTEL_RATING, LoadingStatus } from '../../const';
-import { fetchUserReviewAction } from '../../store/data-property/data-property';
+import { ErrorMessageSubmittingReview, HOTEL_RATING, LoadingStatus, MAX_REVIEW_SIZE, MIN_REVIEW_SIZE } from '../../const';
+import { fetchUserReviewAction, reviewStatus } from '../../store/data-property/data-property';
 import * as selector from '../../store/selector';
 import { UserReviewType } from '../../types/types';
 import CommentRating from './comment-rating';
 
 const commentFormInitialState = {
   comment: '',
-  rating: '0',
+  rating: '',
 };
 
 function PropertyCommentForm (): JSX.Element {
   const dispatch = useDispatch();
   const reviewLoadingStatus = useSelector(selector.getReviewStatus);
   const [reviewContent, setReviewContent] = useState(commentFormInitialState.comment);
+  const [isReviewContentValid, setIsReviewContentValid] = useState(false);
   const [residenceRating, setResidenceRating] = useState(commentFormInitialState.rating);
-  const [isElementDisabled, setIsElementDisabled] = useState(false);
-  const [isElementReset, setIsElementReset] = useState(false);
+  const [isBtnDisabled, setIsBtnDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (reviewLoadingStatus === LoadingStatus.Loading) {
-      setIsElementDisabled(true);
-    }
-    if(reviewLoadingStatus === LoadingStatus.Succeeded) {
-      resetForm();
-    }
-  }, [reviewLoadingStatus]);
+    const resetForm = () => {
+      setIsBtnDisabled(true);
+      setResidenceRating('');
+      setReviewContent('');
+      setIsLoading(false);
+      setIsReviewContentValid(false);
+      dispatch(reviewStatus(LoadingStatus.Idle));
+    };
 
-  const resetForm = () => {
-    setIsElementDisabled(false);
-    setIsElementReset(true);
-    setResidenceRating('');
-    setReviewContent('');
+    (reviewLoadingStatus === LoadingStatus.Loading) && blockForm();
+    (reviewLoadingStatus === LoadingStatus.Succeeded) && resetForm();
+    (reviewLoadingStatus === LoadingStatus.Failed) && unblockForm();
+
+    isReviewContentValid && residenceRating && setIsBtnDisabled(false);
+    !residenceRating && setIsBtnDisabled(true);
+    !isReviewContentValid && setIsBtnDisabled(true);
+  }, [dispatch, isReviewContentValid, residenceRating, reviewLoadingStatus]);
+
+
+  const blockForm = () => {
+    setIsBtnDisabled(true);
+    setIsLoading(true);
   };
 
-  const onSubmit = (userReview:UserReviewType) => {
+  const unblockForm = () => {
+    setIsLoading(false);
+    setIsBtnDisabled(false);
+  };
+
+  const onSubmit = (userReview:UserReviewType) =>
     dispatch(fetchUserReviewAction(userReview));
-  };
 
   const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement> ) => {
     evt.preventDefault();
-    setReviewContent(evt.target.value);
-    // eslint-disable-next-line no-console
-    console.log(reviewContent, residenceRating);
+    const reviewElement = evt.target;
+    const reviewValue = evt.target.value;
+
+    if(reviewValue.trim().length < MIN_REVIEW_SIZE) {
+      reviewElement.setCustomValidity(ErrorMessageSubmittingReview.TextMin);
+    } else if (reviewValue.length > MAX_REVIEW_SIZE) {
+      reviewElement.setCustomValidity(ErrorMessageSubmittingReview.TextMax);
+    } else {
+      reviewElement.setCustomValidity('');
+    }
+
+    setReviewContent(reviewValue);
+    setIsReviewContentValid(reviewElement.reportValidity());
   };
 
-  const handleRatingChange = (rating:string) => setResidenceRating(rating);
+  const handleRatingChange = (rating:string) => {
+    setResidenceRating(rating);
+  };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
 
     onSubmit({
       comment: reviewContent,
       rating: Number(residenceRating),
     });
   };
-
 
   return(
     <form className="reviews__form form" onSubmit={handleSubmit} action="" method="post">
@@ -73,8 +97,8 @@ function PropertyCommentForm (): JSX.Element {
                 number={value}
                 stringNumber={stringValue}
                 key={value}
-                isDisabled={isElementDisabled}
-                isReset={isElementReset}
+                isDisabled={isLoading}
+                highlightedStar={residenceRating}
               />
             ))}
       </div>
@@ -86,6 +110,7 @@ function PropertyCommentForm (): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={reviewContent}
+        disabled={isLoading}
       />
 
       <div className="reviews__button-wrapper">
@@ -95,9 +120,9 @@ function PropertyCommentForm (): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isElementDisabled}
+          disabled={isBtnDisabled}
         >
-          {'Submit'}
+          {isLoading ? 'Saving...' : 'Submit'}
         </button>
       </div>
     </form>

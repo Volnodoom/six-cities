@@ -4,19 +4,19 @@ type CommentRatingProps = {
   number: number,
   stringNumber: string,
   isDisabled: boolean,
-  isReset: boolean,
+  highlightedStar: string,
   onRatingChange: (rating: string) => void,
 };
 
 function CommentRating (props: CommentRatingProps):JSX.Element {
-  const {number, stringNumber, onRatingChange, isDisabled, isReset} = props;
+  const {number, stringNumber, onRatingChange, isDisabled, highlightedStar} = props;
   const [stars, setStars] = useState('');
 
   useEffect(() => {
-    if(isReset) {
+    if(!highlightedStar) {
       setStars('');
     }
-  }, [isReset]);
+  }, [highlightedStar]);
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     onRatingChange(evt.target.value);

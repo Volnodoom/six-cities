@@ -1,6 +1,6 @@
 import { ErrorType } from '../types/error-types';
 import request from 'axios';
-import { AppRoutes, HTTP_CODE, LoadingStatus } from '../const';
+import { AppRoutes, HTTP_CODE, LoadingStatus, NO_CONNECTION, NO_CONNECTION_MESSAGE } from '../const';
 import { store } from '../store';
 import { clearErrorAction } from '../store/api-actions';
 import { setErrorUser } from '../store/data-user/data-user';
@@ -23,6 +23,9 @@ export const errorHandle = (error: ErrorType): void => {
     } else if (store.getState().DATA_PROPERTY.loadingPropertyStatus === LoadingStatus.Failed) {
       store.dispatch(setErrorProperty(message));
       store.dispatch(clearErrorAction());
+    } else if (store.getState().DATA_PROPERTY.loadingReviewStatus === LoadingStatus.Failed) {
+      store.dispatch(setErrorProperty(message));
+      store.dispatch(clearErrorAction());
     }
   };
 
@@ -41,5 +44,9 @@ export const errorHandle = (error: ErrorType): void => {
         store.dispatch(redirectToRoute(AppRoutes.NotAvailable));
         break;
     }
+  }
+
+  if (error.message === NO_CONNECTION) {
+    handleError(NO_CONNECTION_MESSAGE);
   }
 };

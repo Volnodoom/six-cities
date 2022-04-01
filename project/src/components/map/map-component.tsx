@@ -28,7 +28,6 @@ function MapComponent (props: MapProps): JSX.Element {
 
   const mapGeneral = useMap(mapRef, isOnMain ? mainCityLocation : property?.location);
 
-  const pins = new Map();
 
   useEffect( () => {
     if (mapGeneral && isOnMain) {
@@ -40,9 +39,10 @@ function MapComponent (props: MapProps): JSX.Element {
         mainCityLocation.zoom,
       );
     }
-  }, [mainCityLocation]);
+  }, [isOnMain, mainCityLocation, mapGeneral]);
 
   useEffect(() => {
+    const pins = new Map();
 
     const selectedCustomIcon = new Icon({
       iconUrl: PinMarker.Selected,
@@ -94,7 +94,7 @@ function MapComponent (props: MapProps): JSX.Element {
       }
       pins.clear();
     };
-  });
+  }, [accommodations, highlightedCard, isCardHighlighted, isOnMain, isOnProperty, mapGeneral, neabyOffers, property]);
 
 
   return (

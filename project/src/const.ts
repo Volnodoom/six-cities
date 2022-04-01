@@ -14,6 +14,10 @@ export const TIMEOUT_SHOW_ERROR = 3000;
 export const AUTH_TOKEN_KEY_NAME = 'guess-six-sites-token';
 export const REDIRECT_GLOBAL = 'global/redirectToRoute';
 export const CLEAR_ERROR = 'data/clearError';
+export const MIN_REVIEW_SIZE = 50;
+export const MAX_REVIEW_SIZE = 300;
+export const NO_CONNECTION = 'Network Error';
+export const NO_CONNECTION_MESSAGE = 'There is some internet connection problems on your side, please, try it again.';
 
 export enum SortingLabel {
   Popular = 'Popular',
@@ -119,6 +123,12 @@ export const ErrorMessageContentPassword = [
   'Current password does not contain any letters. Please, add any Latin letter to make it safer.',
   'Your password should not contain any spaces. Please, remove it',
 ];
+
+export const ErrorMessageSubmittingReview = {
+  TextMin: 'Your review should contain at least 50 symbols. Please, provide a more detailed feedback.',
+  TextMax: 'Your review should not contain more then 300 symbols. Please, provide your feedback in more concise way.',
+  Rating: 'It is required to set rating (number of stars).',
+};
 
 export enum NameSpace {
   DataOffers = 'DATA_OFFERS',

@@ -67,13 +67,17 @@ export const fetchUserReviewAction = createAsyncThunk<void, UserReviewType, {
     try {
       const {id} = getState().DATA_PROPERTY.property as SingleOffer;
       const {data} : AxiosResponse<RawReview[]> = await api.post(APIRoutes.Reviews(id), {comment, rating});
+      // eslint-disable-next-line no-console
+      console.log(data);
       dispatch(
         reviews(
           data.map((line ) => adaptReviewToClient(line)),
         ),
       );
     } catch (error) {
+      dispatch(reviewStatus(LoadingStatus.Failed));
       errorHandle(error);
+      throw new Error();
     }
   },
 );
@@ -88,6 +92,9 @@ export const dataProperty = createSlice({
     },
     reviews: (state, action) => {
       state.reviews = action.payload;
+    },
+    reviewStatus: (state, action) => {
+      state.loadingReviewStatus = action.payload;
     },
     nearbyOffers: (state, action) => {
       state.nearbyOffers = action.payload;
@@ -112,9 +119,11 @@ export const dataProperty = createSlice({
       })
       .addCase(fetchUserReviewAction.fulfilled, (state, action) => {
         state.loadingReviewStatus = LoadingStatus.Succeeded;
+      })
+      .addCase(fetchUserReviewAction.rejected, (state, action) => {
+        state.loadingReviewStatus = LoadingStatus.Failed;
       });
-
   },
 });
 
-export const {reviews, property, nearbyOffers, setErrorProperty} = dataProperty.actions;
+export const {reviews, property, nearbyOffers, setErrorProperty, reviewStatus} = dataProperty.actions;
