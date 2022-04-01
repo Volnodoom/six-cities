@@ -26,6 +26,7 @@ export type DataProperty = {
   property: SingleOffer | null,
   nearbyOffers: SingleOffer[],
   loadingPropertyStatus: LoadingStatus,
+  loadingReviewStatus: LoadingStatus,
   errorProperty: string | null,
 }
 

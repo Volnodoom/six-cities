@@ -1,11 +1,12 @@
 import { ErrorType } from '../types/error-types';
 import request from 'axios';
-import { HTTP_CODE, LoadingStatus } from '../const';
+import { AppRoutes, HTTP_CODE, LoadingStatus } from '../const';
 import { store } from '../store';
 import { clearErrorAction } from '../store/api-actions';
 import { setErrorUser } from '../store/data-user/data-user';
 import { setErrorOffers } from '../store/data-offers/data-offers';
 import { setErrorProperty } from '../store/data-property/data-property';
+import { redirectToRoute } from '../store/action';
 
 export const errorHandle = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {
@@ -37,6 +38,7 @@ export const errorHandle = (error: ErrorType): void => {
         break;
       case HTTP_CODE.NOT_FOUND:
         handleError(response.data.error);
+        store.dispatch(redirectToRoute(AppRoutes.NotAvailable));
         break;
     }
   }

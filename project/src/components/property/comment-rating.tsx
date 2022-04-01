@@ -1,22 +1,39 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 type CommentRatingProps = {
   number: number,
   stringNumber: string,
+  isDisabled: boolean,
+  isReset: boolean,
   onRatingChange: (rating: string) => void,
 };
 
 function CommentRating (props: CommentRatingProps):JSX.Element {
-  const {number, stringNumber, onRatingChange} = props;
+  const {number, stringNumber, onRatingChange, isDisabled, isReset} = props;
+  const [stars, setStars] = useState('');
+
+  useEffect(() => {
+    if(isReset) {
+      setStars('');
+    }
+  }, [isReset]);
+
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    onRatingChange(evt.target.value);
+    setStars(evt.target.value);
+  };
+
   return(
     <>
       <input
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => onRatingChange(evt.target.value)}
+        onChange={handleChange}
         className="form__rating-input visually-hidden"
         name="rating"
         value={number}
         id={`${number}-stars`}
         type="radio"
+        checked={number === Number(stars)}
+        disabled={isDisabled}
       />
 
       <label

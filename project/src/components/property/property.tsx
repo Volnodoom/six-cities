@@ -1,4 +1,4 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { IdParam } from '../../types/types';
 import Header from '../general/header';
 import HotelCard from '../general/hotel-card/hotel-card';
@@ -9,7 +9,7 @@ import PropertyReviewBox from './property-review-box';
 import * as selector from '../../store/selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { AppRoutes, LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, LoadingStatus, MapClassName, PlaceCard } from '../../const';
+import { LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, LoadingStatus, MapClassName, PlaceCard } from '../../const';
 import { isCheckedAuth } from '../../utils/utils-components';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchPropertyDataAction } from '../../store/data-property/data-property';
@@ -19,7 +19,6 @@ function Property (): JSX.Element {
   const authorizationStatus = useSelector(selector.getAuthorizationStatus);
   const isAuthorized = useSelector(selector.getIsAuthorized);
   const isPropertyLoaded = useSelector(selector.getPropertyLoadingStatus) === LoadingStatus.Succeeded;
-  const isPropertyCrashed = useSelector(selector.getPropertyLoadingStatus) === LoadingStatus.Failed;
   const {id} = useParams<IdParam>();
   const dispatch = useDispatch();
 
@@ -37,10 +36,6 @@ function Property (): JSX.Element {
     return(
       <LoadingScreen />
     );
-  }
-
-  if (isPropertyCrashed) {
-    return <Navigate to={AppRoutes.NotAvailable}/>;
   }
 
   const {propertyPhotos, isPremium} = accommodation;

@@ -94,6 +94,11 @@ export type RawReview = {
   },
 };
 
+export type UserReviewType = {
+  comment: string,
+  rating: number,
+}
+
 export type CityMainName = {name: string}
 export type Location = {
     latitude: number,

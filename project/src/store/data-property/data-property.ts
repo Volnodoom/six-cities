@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosResponse } from 'axios';
 import { ApiActions, APIRoutes, LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS, LoadingStatus, NameSpace } from '../../const';
 import { adaptOfferToClient, adaptReviewToClient } from '../../services/adapters';
 import { errorHandle } from '../../services/error-handle';
 import { AppDispatch, DataProperty, State } from '../../types/state';
-import { RawOffer, RawReview } from '../../types/types';
+import { RawOffer, RawReview, SingleOffer, UserReviewType } from '../../types/types';
 
 const initialState: DataProperty = {
   reviews: [],
@@ -12,6 +12,7 @@ const initialState: DataProperty = {
   nearbyOffers: [],
   loadingPropertyStatus: LoadingStatus.Idle,
   errorProperty: null,
+  loadingReviewStatus: LoadingStatus.Idle,
 };
 
 export const fetchPropertyDataAction = createAsyncThunk<void, number, {
@@ -56,6 +57,28 @@ export const fetchPropertyDataAction = createAsyncThunk<void, number, {
   },
 );
 
+export const fetchUserReviewAction = createAsyncThunk<void, UserReviewType, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
+  ApiActions.FetchReview,
+  async ({comment, rating}, {dispatch, getState, extra: api}) => {
+    try {
+      const {id} = getState().DATA_PROPERTY.property as SingleOffer;
+      const {data} : AxiosResponse<RawReview[]> = await api.post(APIRoutes.Reviews(id), {comment, rating});
+      dispatch(
+        reviews(
+          data.map((line ) => adaptReviewToClient(line)),
+        ),
+      );
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+
 export const dataProperty = createSlice({
   name: NameSpace.DataProperty,
   initialState,
@@ -83,6 +106,12 @@ export const dataProperty = createSlice({
       })
       .addCase(fetchPropertyDataAction.rejected, (state, action) => {
         state.loadingPropertyStatus = LoadingStatus.Failed;
+      })
+      .addCase(fetchUserReviewAction.pending, (state, action) => {
+        state.loadingReviewStatus = LoadingStatus.Loading;
+      })
+      .addCase(fetchUserReviewAction.fulfilled, (state, action) => {
+        state.loadingReviewStatus = LoadingStatus.Succeeded;
       });
 
   },

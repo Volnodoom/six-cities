@@ -69,7 +69,7 @@ export const HOTEL_RATING = [
     value: 5,
     stringValue: 'Perfect',
   },
-] as const;
+];
 
 export enum PlaceCard {
   Main = 'MAIN',
@@ -140,6 +140,7 @@ export enum ApiActions {
   CheckAuthorization = 'user/checkAuth',
   PostLogin = 'user/login',
   Logout = 'user/logout',
+  FetchReview = 'data/fetchUserReview'
 
 }
 
