@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoutes, PlaceCard } from '../../../const';
-import { AccommodationLocation, SingleOffer } from '../../../types/types';
+import { HighlightCardInfo, SingleOffer } from '../../../types/types';
 import CardContent from './card-content';
 
 type HotelCardProps = {
   accommodationInfo: SingleOffer,
-  onMouseIn?: (offerCard: AccommodationLocation | null) => void,
+  onMouseIn?: (offerCard: HighlightCardInfo | null) => void,
   cardKind: PlaceCard,
 }
 
@@ -15,7 +15,6 @@ function HotelCard (props: HotelCardProps): JSX.Element {
     id,
     isPremium,
     propertyPreview,
-    location,
   }=props.accommodationInfo;
 
   let articleClassName = '';
@@ -43,8 +42,8 @@ function HotelCard (props: HotelCardProps): JSX.Element {
   return(
     <article
       className={`${articleClassName} place-card`}
-      onMouseEnter={() => {if(onMouseIn){onMouseIn({isCardPointed: true, location});}}}
-      onMouseLeave={() => {if(onMouseIn){onMouseIn({isCardPointed: false, location});}}}
+      onMouseEnter={() => {if(onMouseIn){onMouseIn({isCardHighlighted: true, card: accommodationInfo});}}}
+      onMouseLeave={() => {if(onMouseIn){onMouseIn({isCardHighlighted: false, card: accommodationInfo});}}}
     >
 
       {(cardKind === PlaceCard.Main) && isPremium

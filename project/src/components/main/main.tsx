@@ -5,7 +5,7 @@ import MainEmpty from './main-empty';
 import MainContent from './main-content';
 import { useDispatch, useSelector } from 'react-redux';
 import * as selector from '../../store/selector';
-import { listOffersForCity } from '../../store/action';
+import { listOffersForCity } from '../../store/data-offers/data-offers';
 
 function Main (): JSX.Element {
   const currentCity = useSelector(selector.getCurrentCity);

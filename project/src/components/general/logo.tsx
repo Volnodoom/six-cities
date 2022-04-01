@@ -32,7 +32,7 @@ function Logo (props: {position: LogoPosition}):JSX.Element {
 
 
   return(
-    <Link className={logoClass[0]} to={AppRoutes.Root} onClick={ handleLinkDisable}>
+    <Link className={logoClass[0]} to={AppRoutes.Root} onClick={handleLinkDisable}>
       <img className={logoClass[1]} src="img/logo.svg" alt="6 cities logo" width={logoParameters[0]} height={logoParameters[1]}/>
     </Link>
   );

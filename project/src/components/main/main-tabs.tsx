@@ -1,8 +1,9 @@
 import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Cities } from '../../const';
+import { currentCity } from '../../store/data-offers/data-offers';
 import * as selector from '../../store/selector';
-import { currentCity } from '../../store/action';
+
 
 function MainTabs (): JSX.Element {
   const citiesArray = Object.values(Cities);
