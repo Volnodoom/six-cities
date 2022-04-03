@@ -1,19 +1,12 @@
 import MainTabs from './main-tabs';
 import Header from '../general/header';
-import { filterCity } from '../../utils/utils-components';
 import MainEmpty from './main-empty';
 import MainContent from './main-content';
-import { useDispatch, useSelector } from 'react-redux';
-import * as selector from '../../store/selector';
-import { listOffersForCity } from '../../store/data-offers/data-offers';
+import { useSelector } from 'react-redux';
+import * as selector from '../../store/data-offers/offers-selector';
 
 function Main (): JSX.Element {
-  const currentCity = useSelector(selector.getCurrentCity);
-  const accommodations = useSelector(selector.getOffers);
-  const dispatch = useDispatch();
-
-  const cityAccommodations = filterCity(currentCity, accommodations);
-  dispatch(listOffersForCity(cityAccommodations));
+  const cityAccommodations = useSelector(selector.getOffersForCity);
 
   return(
     <div className="page page--gray page--main">
@@ -24,7 +17,7 @@ function Main (): JSX.Element {
         <div className="cities">
           {
             cityAccommodations.length === 0
-              ? <MainEmpty cityName={currentCity}/>
+              ? <MainEmpty />
               : <MainContent />
           }
         </div>

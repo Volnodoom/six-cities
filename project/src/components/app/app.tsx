@@ -9,13 +9,14 @@ import Main from '../main/main';
 import Property from '../property/property';
 import NotAvailablePage from '../routing/not-available-page';
 import PrivateRoute from '../routing/private-route';
-import * as selector from '../../store/selector';
+import * as selector from '../../store/data-user/user-selector';
+import * as selectorOffers from '../../store/data-offers/offers-selector';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App (): JSX.Element {
   const authorizationStatus = useSelector(selector.getAuthorizationStatus);
-  const isOfferLoaded = useSelector(selector.getOffersLoadingStatus) === LoadingStatus.Succeeded;
+  const isOfferLoaded = useSelector(selectorOffers.getOffersLoadingStatus) === LoadingStatus.Succeeded;
 
   if (isCheckedAuth(authorizationStatus) || !isOfferLoaded) {
     return(

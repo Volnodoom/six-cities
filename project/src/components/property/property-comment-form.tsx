@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ErrorMessageSubmittingReview, HOTEL_RATING, LoadingStatus, MAX_REVIEW_SIZE, MIN_REVIEW_SIZE } from '../../const';
 import { fetchUserReviewAction, reviewStatus } from '../../store/data-property/data-property';
-import * as selector from '../../store/selector';
+import * as selector from '../../store/data-property/property-selector';
 import { UserReviewType } from '../../types/types';
 import CommentRating from './comment-rating';
 

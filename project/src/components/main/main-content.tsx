@@ -1,15 +1,16 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { MouseEvent, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MapClassName,PlaceCard, SortingLabel } from '../../const';
 import { HighlightCardInfo } from '../../types/types';
-import * as selector from '../../store/selector';
+import * as selector from '../../store/data-offers/offers-selector';
 import HotelCard from '../general/hotel-card/hotel-card';
-import { sortHighToLow, sortLowToHigh, sortTopRate } from '../../utils/utils-components';
 import MapComponent from '../map/map-component';
+import { currentSort } from '../../store/data-offers/data-offers';
 
 function MainContent (): JSX.Element {
+  const dispatch = useDispatch();
   const cityAccommodations = useSelector(selector.getOffersForCity);
-  const [currentSortType, setCurrentSortType] = useState(SortingLabel.Popular);
+  const sortType = useSelector(selector.getSortType);
 
   const [mouseEnteredCard, setMouseEnteredCard] = useState<HighlightCardInfo | null>(null);
   const [isOptionSelected, setIsOptionSelected] = useState(false);
@@ -17,31 +18,13 @@ function MainContent (): JSX.Element {
   const ulRef = useRef<HTMLUListElement | null>(null);
   const spanRef = useRef<HTMLSpanElement | null>(null);
 
-  const getSortClassName = (elementLabel: SortingLabel) => `places__option ${currentSortType === elementLabel && 'places__option--active'}`;
+  const getSortClassName = (elementLabel: SortingLabel) => `places__option ${sortType === elementLabel && 'places__option--active'}`;
   const sortLabels = Object.values(SortingLabel);
 
-  useEffect(() => {
-    setCurrentSortType(SortingLabel.Popular);
-  }, [cityAccommodations]);
-
-  const getOffersAccordingSort = (kind:SortingLabel) => {
-    switch (kind) {
-      case SortingLabel.Low:
-        return sortLowToHigh(cityAccommodations);
-      case SortingLabel.High:
-        return sortHighToLow(cityAccommodations);
-      case SortingLabel.TopRate:
-        return sortTopRate(cityAccommodations);
-      default:
-        return cityAccommodations;
-    }
-  };
-
-  const sortedOffers = getOffersAccordingSort(currentSortType);
 
   const handleSort = (evt: MouseEvent<HTMLLIElement>) => {
-    const sortName = (evt.target as HTMLLIElement).textContent as SortingLabel;
-    sortName && setCurrentSortType(sortName);
+    const sortName = (evt.target as HTMLLIElement).dataset.sortoption as SortingLabel;
+    sortName && dispatch(currentSort(sortName));
   };
 
   const handleSortBehavior = (evt: MouseEvent<HTMLElement>) => {
@@ -64,7 +47,7 @@ function MainContent (): JSX.Element {
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption" ref={spanRef}>Sort by </span>
           <span className="places__sorting-type" tabIndex={0}>
-            {currentSortType}
+            {sortType}
             <svg className="places__sorting-arrow" width="7" height="4">
               <use xlinkHref="#icon-arrow-select"></use>
             </svg>
@@ -76,13 +59,14 @@ function MainContent (): JSX.Element {
                   onClick={handleSort}
                   tabIndex={0}
                   key={line}
+                  data-sortoption={line}
                 >{line}
                 </li>))}
           </ul>
         </form>
 
         <div className="cities__places-list places__list tabs__content">
-          {sortedOffers
+          {cityAccommodations
             .map((offer) => (
               <HotelCard
                 onMouseIn={handleCardHighlight}

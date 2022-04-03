@@ -1,5 +1,5 @@
 import { DivIcon, Map, Marker } from 'leaflet';
-import { AuthorizationStatus, ErrorMessageContentPassword, HUNDRED, STARS_NUMBER, STAR_STEP, TEN } from '../const';
+import { AuthorizationStatus, ErrorMessageContentPassword, HUNDRED, SortingLabel, STARS_NUMBER, STAR_STEP, TEN } from '../const';
 import { SingleOffer } from '../types/types';
 
 export const getStarRating = (rating: number): number => {
@@ -14,9 +14,6 @@ export const getStarRating = (rating: number): number => {
   }
 };
 
-export const filterCity = (cityName:string, accommodations:SingleOffer[]): SingleOffer[] =>
-  accommodations.filter((offer) => offer.city.name === cityName);
-
 export const designPinOnMap = (latitude: number, longitude: number, pin: DivIcon, map: Map) => {
   const marker = new Marker({
     lat: latitude,
@@ -25,6 +22,9 @@ export const designPinOnMap = (latitude: number, longitude: number, pin: DivIcon
 
   return marker.setIcon(pin).addTo(map);
 };
+
+export const filterOffersForCity = (cityName:string, accommodations:SingleOffer[]): SingleOffer[] =>
+  accommodations.filter((offer) => offer.city.name === cityName);
 
 export const sortLowToHigh = (list: SingleOffer[]):SingleOffer[] =>
   list
@@ -40,6 +40,19 @@ export const sortTopRate = (list: SingleOffer[]):SingleOffer[] =>
   list
     .slice()
     .sort((valueA, valueB) => valueB.rating - valueA.rating);
+
+export const getOffersAccordingSortType = (kind:SortingLabel, offers:SingleOffer[]): SingleOffer[] => {
+  switch (kind) {
+    case SortingLabel.Low:
+      return sortLowToHigh(offers);
+    case SortingLabel.High:
+      return sortHighToLow(offers);
+    case SortingLabel.TopRate:
+      return sortTopRate(offers);
+    default:
+      return offers;
+  }
+};
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;

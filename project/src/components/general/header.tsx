@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoutes, LogoPosition } from '../../const';
 import { logoutAction } from '../../store/api-actions';
-import * as selector from '../../store/selector';
+import * as selector from '../../store/data-user/user-selector';
 import Logo from './logo';
 
 type HeaderProps = {

@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux';
-import * as selector from '../../store/selector';
+import * as selectorUser from '../../store/data-user/user-selector';
+import * as selectorProperty from '../../store/data-property/property-selector';
+import * as selectorOffer from '../../store/data-offers/offers-selector';
 import { divStyleErrorMsg } from './style-error-msg';
 
 function ErrorMessage (): JSX.Element | null {
-  const errorUser = useSelector(selector.getUserError);
-  const errorOffers = useSelector(selector.getOffersError);
-  const errorProperty = useSelector(selector.getPropertyError);
+  const errorUser = useSelector(selectorUser.getUserError);
+  const errorOffers = useSelector(selectorOffer.getOffersError);
+  const errorProperty = useSelector(selectorProperty.getPropertyError);
 
   if (errorUser) {
     return (

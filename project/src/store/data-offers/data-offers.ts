@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ApiActions, APIRoutes, Cities, LoadingStatus, NameSpace } from '../../const';
+import { ApiActions, APIRoutes, Cities, LoadingStatus, NameSpace, SortingLabel } from '../../const';
 import { AppDispatch, DataOffers, State } from '../../types/state';
 import { RawOffer } from '../../types/types';
 import { adaptOfferToClient } from '../../services/adapters';
@@ -9,6 +9,7 @@ import { errorHandle } from '../../services/error-handle';
 const initialState: DataOffers = {
   listOffers: [],
   currentCity: Cities.Paris,
+  sortType: SortingLabel.Popular,
   listOffersForCity: [],
   errorOffers: null,
   loadingOffersStatus: LoadingStatus.Idle,
@@ -41,6 +42,9 @@ export const dataOffers = createSlice({
     currentCity: (state, action) => {
       state.currentCity = action.payload;
     },
+    currentSort: (state, action) => {
+      state.sortType = action.payload;
+    },
     listOffersForCity: (state, action) => {
       state.listOffersForCity = action.payload;
     },
@@ -62,4 +66,4 @@ export const dataOffers = createSlice({
   },
 });
 
-export const {listOffers, currentCity, listOffersForCity, setErrorOffers} = dataOffers.actions;
+export const {listOffers, currentCity, listOffersForCity, setErrorOffers, currentSort} = dataOffers.actions;
