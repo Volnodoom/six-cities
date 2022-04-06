@@ -31,3 +31,8 @@ export type DataProperty = {
   errorProperty: string | null,
 }
 
+export type DataFavorites = {
+  favoriteOffers: SingleOffer [] | [],
+  loadingStatus: LoadingStatus,
+  errors: string | null,
+}

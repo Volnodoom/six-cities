@@ -7,6 +7,7 @@ import { setErrorUser } from '../store/data-user/data-user';
 import { setErrorOffers } from '../store/data-offers/data-offers';
 import { setErrorProperty } from '../store/data-property/data-property';
 import { redirectToRoute } from '../store/action';
+import { setErrorFavorites } from '../store/data-favorites/data-favorites';
 
 export const errorHandle = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {
@@ -25,6 +26,9 @@ export const errorHandle = (error: ErrorType): void => {
       store.dispatch(clearErrorAction());
     } else if (store.getState().DATA_PROPERTY.loadingReviewStatus === LoadingStatus.Failed) {
       store.dispatch(setErrorProperty(message));
+      store.dispatch(clearErrorAction());
+    } else if (store.getState().DATA_FAVORITES.loadingStatus === LoadingStatus.Failed) {
+      store.dispatch(setErrorFavorites(message));
       store.dispatch(clearErrorAction());
     }
   };

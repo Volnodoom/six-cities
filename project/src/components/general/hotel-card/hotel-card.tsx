@@ -71,7 +71,7 @@ function HotelCard (props: HotelCardProps): JSX.Element {
       </div>
 
       {cardKind === PlaceCard.Favorites
-        ? <CardContent isFavoriteCard accommodationInfo={accommodationInfo}/>
+        ? <CardContent isFavoritePage accommodationInfo={accommodationInfo}/>
         : <CardContent accommodationInfo={accommodationInfo}/>}
 
     </article>

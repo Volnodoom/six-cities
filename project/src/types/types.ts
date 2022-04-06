@@ -108,7 +108,6 @@ export type Location = {
 
 export type CityMainDetails = CityMainName & Location
 
-
 export type HighlightCardInfo = {
   isCardHighlighted: boolean;
   card: SingleOffer;

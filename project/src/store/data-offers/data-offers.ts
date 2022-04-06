@@ -5,6 +5,7 @@ import { RawOffer } from '../../types/types';
 import { adaptOfferToClient } from '../../services/adapters';
 import { AxiosInstance } from 'axios';
 import { errorHandle } from '../../services/error-handle';
+import { findOfferIntoOffers } from '../../utils/utils-components';
 
 const initialState: DataOffers = {
   listOffers: [],
@@ -27,6 +28,7 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
       const adaptedData = data.map((line) => adaptOfferToClient(line));
       dispatch(listOffers(adaptedData));
     } catch (error) {
+      dispatch(setLoadingOffersStatus(LoadingStatus.Failed));
       errorHandle(error);
     }
   },
@@ -39,6 +41,9 @@ export const dataOffers = createSlice({
     listOffers: (state, action) => {
       state.listOffers = action.payload;
     },
+    clearListOffers: (state) => {
+      state.listOffers = [];
+    },
     currentCity: (state, action) => {
       state.currentCity = action.payload;
     },
@@ -47,6 +52,16 @@ export const dataOffers = createSlice({
     },
     listOffersForCity: (state, action) => {
       state.listOffersForCity = action.payload;
+    },
+    updateFavoriteInOffers: (state, action) => {
+      const offerToChange = findOfferIntoOffers(state.listOffers, action.payload);
+
+      if (offerToChange) {
+        offerToChange.isFavorite = !offerToChange.isFavorite;
+      }
+    },
+    setLoadingOffersStatus: (state, action) => {
+      state.loadingOffersStatus = action.payload;
     },
     setErrorOffers: (state, action) => {
       state.errorOffers = action.payload;
@@ -66,4 +81,13 @@ export const dataOffers = createSlice({
   },
 });
 
-export const {listOffers, currentCity, listOffersForCity, setErrorOffers, currentSort} = dataOffers.actions;
+export const {
+  listOffers,
+  currentCity,
+  listOffersForCity,
+  setErrorOffers,
+  currentSort,
+  setLoadingOffersStatus,
+  updateFavoriteInOffers,
+  clearListOffers,
+} = dataOffers.actions;

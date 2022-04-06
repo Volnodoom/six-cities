@@ -22,6 +22,7 @@ export const clearErrorAction = createAsyncThunk<void, void, {
         dispatch(setErrorUser(''));
         dispatch(setErrorOffers(''));
         dispatch(setErrorProperty(''));
+        dispatch(setErrorProperty(''));
       },
       TIMEOUT_SHOW_ERROR,
     );
@@ -103,15 +104,3 @@ export const fetchUserDataAction = createAsyncThunk<void, void, {
   },
 );
 
-// export const fetchFavoritesAction = createAsyncThunk(
-//   'data/fetchFavorites',
-//   async () => {
-//     try {
-//       const {data} = await api.get<RawOffer[] | []>(APIRoutes.Favorites);
-//       const adaptedData = data.map((line) => adaptOfferToClient(line));
-//       store.dispatch(favorites(adaptedData));
-//     } catch (error) {
-//       errorHandle(error);
-//     }
-//   },
-// );

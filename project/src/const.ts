@@ -27,7 +27,8 @@ export enum SortingLabel {
 }
 
 export const APIRoutes = {
-  Favorites: '/favorites',
+  Favorites: '/favorite',
+  FavoriteOne: (id: number, favoriteStatus: FavoriteCondition) => `/favorite/${id}/${favoriteStatus}`,
   Login: '/login',
   Logout: '/logout',
   Offers: '/hotels',
@@ -134,6 +135,7 @@ export enum NameSpace {
   DataOffers = 'DATA_OFFERS',
   DataProperty = 'DATA_PROPERTY',
   DataUser = 'DATA_USER',
+  DataFavorites = 'DATA_FAVORITES',
 }
 
 export enum LoadingStatus {
@@ -150,11 +152,17 @@ export enum ApiActions {
   CheckAuthorization = 'user/checkAuth',
   PostLogin = 'user/login',
   Logout = 'user/logout',
-  FetchReview = 'data/fetchUserReview'
-
+  FetchReview = 'data/fetchUserReview',
+  FetchFavorites = 'data/fetchFavorites',
+  PostFavorite = 'data/postFavorite',
 }
 
 export const ReviewDateTimeFormat = {
   month: 'long',
   year: 'numeric',
 } as const;
+
+export enum FavoriteCondition {
+  Add = 1,
+  Remove = 0,
+}

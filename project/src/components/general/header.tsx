@@ -18,7 +18,7 @@ function Header(props: HeaderProps): JSX.Element {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleClick = (evt: MouseEvent<HTMLAnchorElement>) =>{
+  const handleLogoClick = (evt: MouseEvent<HTMLAnchorElement>) =>{
     dispatch(logoutAction());
     if(location.pathname !== AppRoutes.Favorites) {
       evt.preventDefault();
@@ -36,7 +36,7 @@ function Header(props: HeaderProps): JSX.Element {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <Link to={isAuthorized ? AppRoutes.Root : AppRoutes.Login} className="header__nav-link header__nav-link--profile">
+                <Link to={isAuthorized ? AppRoutes.Favorites : AppRoutes.Login} className="header__nav-link header__nav-link--profile">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
                   {
@@ -52,7 +52,7 @@ function Header(props: HeaderProps): JSX.Element {
                 isAuthorized
                 &&
                 <li className="header__nav-item">
-                  <Link to={AppRoutes.Root} className="header__nav-link" onClick={handleClick}>
+                  <Link to={AppRoutes.Root} className="header__nav-link" onClick={handleLogoClick}>
                     <span className="header__signout">Sign out</span>
                   </Link>
                 </li>

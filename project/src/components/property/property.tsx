@@ -15,6 +15,7 @@ import { isCheckedAuth } from '../../utils/utils-components';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchPropertyDataAction } from '../../store/data-property/data-property';
 import MapComponent from '../map/map-component';
+import { clearListOffers } from '../../store/data-offers/data-offers';
 
 function Property (): JSX.Element {
   const authorizationStatus = useSelector(selectorUser.getAuthorizationStatus);
@@ -25,8 +26,10 @@ function Property (): JSX.Element {
 
   useEffect(() => {
     if (id) {
+      dispatch(clearListOffers());
       dispatch(fetchPropertyDataAction(Number(id)));
     }
+
   },[dispatch, id]);
 
   const accommodation = useSelector(selectorProperty.getProperty);
