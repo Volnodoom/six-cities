@@ -1,8 +1,12 @@
+import { useSelector } from 'react-redux';
+import * as selector from '../../store/data-property/property-selector';
 import { SingleOffer } from '../../types/types';
 import FavoriteButton from '../general/favorite-button';
 import StarRating from '../general/star-rating';
 
-function PropertyContent (props: {accommodation: SingleOffer}): JSX.Element {
+function PropertyContent (): JSX.Element {
+  const accommodation = useSelector(selector.getProperty) as SingleOffer;
+
   const {
     id,
     title,
@@ -14,13 +18,13 @@ function PropertyContent (props: {accommodation: SingleOffer}): JSX.Element {
     description,
     goods,
     price,
-  } = props.accommodation;
+  } = accommodation;
 
   const {
     avatarImg,
     isPro,
     name,
-  } = props.accommodation.host;
+  } = accommodation.host;
 
   return(
     <>

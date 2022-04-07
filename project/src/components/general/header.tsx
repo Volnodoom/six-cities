@@ -20,6 +20,7 @@ function Header(props: HeaderProps): JSX.Element {
 
   const handleLogoClick = (evt: MouseEvent<HTMLAnchorElement>) =>{
     dispatch(logoutAction());
+
     if(location.pathname !== AppRoutes.Favorites) {
       evt.preventDefault();
     }

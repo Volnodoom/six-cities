@@ -61,7 +61,7 @@ function Property (): JSX.Element {
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium ? <div className="property__mark"><span>Premium</span></div> : ''}
-              <PropertyContent accommodation={accommodation}/>
+              <PropertyContent />
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews &middot;

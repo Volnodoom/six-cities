@@ -1,5 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { AppRoutes, AuthorizationStatus } from '../../const';
 import { postFavoriteAction } from '../../store/data-favorites/data-favorites';
+import * as selector from '../../store/data-user/user-selector';
 
 type FavoriteButtonProps = {
   toggle: boolean,
@@ -11,8 +14,15 @@ function FavoriteButton (props: FavoriteButtonProps): JSX.Element {
   const {toggle, isPropertyPage, id} = props;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuthorized = useSelector(selector.getAuthorizationStatus) === AuthorizationStatus.Auth;
+
   const handleClick = () => {
-    dispatch(postFavoriteAction(id));
+    if (isAuthorized) {
+      dispatch(postFavoriteAction(id));
+    } else {
+      navigate(AppRoutes.Login);
+    }
   };
 
   return(
