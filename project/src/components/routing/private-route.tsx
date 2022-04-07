@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import {RouteProps} from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
-import * as selector from '../../store/selector';
+import * as selector from '../../store/data-user/user-selector';
 
 type PrivateRouteProps = RouteProps & {
   children: JSX.Element;
@@ -12,7 +12,6 @@ type PrivateRouteProps = RouteProps & {
 function PrivateRoute (props: PrivateRouteProps): JSX.Element {
   const {children, privatePath} = props;
   const authorizationStatus = useSelector(selector.getAuthorizationStatus);
-
   switch(privatePath) {
     case AppRoutes.Login:
       return(
@@ -24,7 +23,7 @@ function PrivateRoute (props: PrivateRouteProps): JSX.Element {
       return(
         authorizationStatus === AuthorizationStatus.Auth
           ? children
-          : <Navigate to={AppRoutes.Login} />
+          : <Navigate to={AppRoutes.Login} replace/>
       );
     default: return children;
   }

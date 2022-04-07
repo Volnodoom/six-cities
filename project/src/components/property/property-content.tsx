@@ -1,8 +1,14 @@
+import { useSelector } from 'react-redux';
+import * as selector from '../../store/data-property/property-selector';
 import { SingleOffer } from '../../types/types';
+import FavoriteButton from '../general/favorite-button';
 import StarRating from '../general/star-rating';
 
-function PropertyContent (props: {accommodation: SingleOffer}): JSX.Element {
+function PropertyContent (): JSX.Element {
+  const accommodation = useSelector(selector.getProperty) as SingleOffer;
+
   const {
+    id,
     title,
     isFavorite,
     rating,
@@ -12,24 +18,19 @@ function PropertyContent (props: {accommodation: SingleOffer}): JSX.Element {
     description,
     goods,
     price,
-  } = props.accommodation;
+  } = accommodation;
 
   const {
     avatarImg,
     isPro,
     name,
-  } = props.accommodation.host;
+  } = accommodation.host;
 
   return(
     <>
       <div className="property__name-wrapper">
         <h1 className="property__name">{title}</h1>
-        <button className={`${isFavorite ? 'property__bookmark-button--active button' : ''} property__bookmark-button button`} type="button">
-          <svg className="property__bookmark-icon" width="31" height="33">
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">To bookmarks</span>
-        </button>
+        <FavoriteButton isPropertyPage id={id} toggle={isFavorite}/>
       </div>
 
       <div className="property__rating rating">

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../../const';
 import { SingleOffer } from '../../../types/types';
+import FavoriteButton from '../favorite-button';
 import StarRating from '../star-rating';
 
-function CardContent (props: {isFavoriteCard?: boolean; accommodationInfo: SingleOffer}): JSX.Element {
-  const {isFavoriteCard}=props;
+function CardContent (props: {isFavoritePage?: boolean; accommodationInfo: SingleOffer}): JSX.Element {
+  const {isFavoritePage}=props;
   const {
     id,
     isFavorite,
@@ -12,24 +13,17 @@ function CardContent (props: {isFavoriteCard?: boolean; accommodationInfo: Singl
     rating,
     title,
     accommodationType,
-  }=props.accommodationInfo;
+  } = props.accommodationInfo;
 
   return(
-    <div className={isFavoriteCard ? 'favorites__card-info' : 'place-card__info'}>
+    <div className={isFavoritePage ? 'favorites__card-info' : 'place-card__info'}>
       <div className="place-card__price-wrapper">
         <div className="place-card__price">
           <b className="place-card__price-value">&euro;{price}</b>
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
-
-        <button className={`${isFavorite ? 'place-card__bookmark-button--active button' : ''} place-card__bookmark-button button`} type="button">
-          <svg className="place-card__bookmark-icon" width="18" height="19">
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">To bookmarks</span>
-        </button>
+        <FavoriteButton id={id} toggle={isFavorite}/>
       </div>
-
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
           <StarRating rating={rating} />

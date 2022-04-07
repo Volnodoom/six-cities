@@ -67,15 +67,13 @@ export const fetchUserReviewAction = createAsyncThunk<void, UserReviewType, {
     try {
       const {id} = getState().DATA_PROPERTY.property as SingleOffer;
       const {data} : AxiosResponse<RawReview[]> = await api.post(APIRoutes.Reviews(id), {comment, rating});
-      // eslint-disable-next-line no-console
-      console.log(data);
       dispatch(
         reviews(
           data.map((line ) => adaptReviewToClient(line)),
         ),
       );
     } catch (error) {
-      dispatch(reviewStatus(LoadingStatus.Failed));
+      dispatch(setReviewStatus(LoadingStatus.Failed));
       errorHandle(error);
       throw new Error();
     }
@@ -90,10 +88,18 @@ export const dataProperty = createSlice({
     property: (state, action) => {
       state.property = action.payload;
     },
+    clearProperty: (state) => {
+      state.property = null;
+    },
+    updateFavoriteInProperty: (state, action) => {
+      if (state.property) {
+        state.property.isFavorite = !state.property?.isFavorite;
+      }
+    },
     reviews: (state, action) => {
       state.reviews = action.payload;
     },
-    reviewStatus: (state, action) => {
+    setReviewStatus: (state, action) => {
       state.loadingReviewStatus = action.payload;
     },
     nearbyOffers: (state, action) => {
@@ -126,4 +132,12 @@ export const dataProperty = createSlice({
   },
 });
 
-export const {reviews, property, nearbyOffers, setErrorProperty, reviewStatus} = dataProperty.actions;
+export const {
+  reviews,
+  property,
+  nearbyOffers,
+  setErrorProperty,
+  setReviewStatus,
+  updateFavoriteInProperty,
+  clearProperty,
+} = dataProperty.actions;

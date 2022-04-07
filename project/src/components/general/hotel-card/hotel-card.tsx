@@ -1,3 +1,4 @@
+// import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoutes, PlaceCard } from '../../../const';
 import { HighlightCardInfo, SingleOffer } from '../../../types/types';
@@ -39,13 +40,20 @@ function HotelCard (props: HotelCardProps): JSX.Element {
       break;
   }
 
+  const handleEnter = () => {if(onMouseIn) {
+    onMouseIn({isCardHighlighted: true, card: accommodationInfo});}
+  };
+
+  const handleLeave = () => {if(onMouseIn) {
+    onMouseIn({isCardHighlighted: false, card: accommodationInfo});}
+  };
+
   return(
     <article
       className={`${articleClassName} place-card`}
-      onMouseEnter={() => {if(onMouseIn){onMouseIn({isCardHighlighted: true, card: accommodationInfo});}}}
-      onMouseLeave={() => {if(onMouseIn){onMouseIn({isCardHighlighted: false, card: accommodationInfo});}}}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
     >
-
       {(cardKind === PlaceCard.Main) && isPremium
         ? <div className="place-card__mark"><span>Premium</span></div>
         : ''}
@@ -63,7 +71,7 @@ function HotelCard (props: HotelCardProps): JSX.Element {
       </div>
 
       {cardKind === PlaceCard.Favorites
-        ? <CardContent isFavoriteCard accommodationInfo={accommodationInfo}/>
+        ? <CardContent isFavoritePage accommodationInfo={accommodationInfo}/>
         : <CardContent accommodationInfo={accommodationInfo}/>}
 
     </article>

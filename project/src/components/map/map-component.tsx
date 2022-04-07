@@ -5,7 +5,8 @@ import { Icon, Map as LeafletMap, Marker } from 'leaflet';
 import { MapClassName, PinMarker, PinOnMap } from '../../const';
 import 'leaflet/dist/leaflet.css';
 import { designPinOnMap } from '../../utils/utils-components';
-import * as selector from '../../store/selector';
+import * as selectorOffers from '../../store/data-offers/offers-selector';
+import * as selectorProperty from '../../store/data-property/property-selector';
 import { useSelector } from 'react-redux';
 
 type MapProps = {
@@ -17,9 +18,9 @@ function MapComponent (props: MapProps): JSX.Element {
   const { mapKind} = props;
   const isCardHighlighted = props.highlightedCardMain?.isCardHighlighted;
   const highlightedCard = props.highlightedCardMain?.card;
-  const accommodations = useSelector(selector.getOffersForCity);
-  const property = useSelector(selector.getProperty);
-  const neabyOffers = useSelector(selector.getNearbyOffers);
+  const accommodations = useSelector(selectorOffers.getOffersForCity);
+  const property = useSelector(selectorProperty.getProperty);
+  const neabyOffers = useSelector(selectorProperty.getNearbyOffers);
   const mapRef = useRef<HTMLDivElement | null> (null);
 
   const isOnMain = mapKind === MapClassName.Main;

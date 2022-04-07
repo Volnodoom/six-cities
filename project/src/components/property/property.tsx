@@ -6,7 +6,8 @@ import PropertyCommentForm from './property-comment-form';
 import PropertyContent from './property-content';
 import PropertyImg from './property-img';
 import PropertyReviewBox from './property-review-box';
-import * as selector from '../../store/selector';
+import * as selectorUser from '../../store/data-user/user-selector';
+import * as selectorProperty from '../../store/data-property/property-selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { LIMITED_NUMBER_OF_PHOTOS, LIMITED_NUMBER_OF_REVIEWS, LoadingStatus, MapClassName, PlaceCard } from '../../const';
@@ -14,23 +15,26 @@ import { isCheckedAuth } from '../../utils/utils-components';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchPropertyDataAction } from '../../store/data-property/data-property';
 import MapComponent from '../map/map-component';
+import { clearListOffers } from '../../store/data-offers/data-offers';
 
 function Property (): JSX.Element {
-  const authorizationStatus = useSelector(selector.getAuthorizationStatus);
-  const isAuthorized = useSelector(selector.getIsAuthorized);
-  const isPropertyLoaded = useSelector(selector.getPropertyLoadingStatus) === LoadingStatus.Succeeded;
+  const authorizationStatus = useSelector(selectorUser.getAuthorizationStatus);
+  const isAuthorized = useSelector(selectorUser.getIsAuthorized);
+  const isPropertyLoaded = useSelector(selectorProperty.getPropertyLoadingStatus) === LoadingStatus.Succeeded;
   const {id} = useParams<IdParam>();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (id) {
+      dispatch(clearListOffers());
       dispatch(fetchPropertyDataAction(Number(id)));
     }
+
   },[dispatch, id]);
 
-  const accommodation = useSelector(selector.getProperty);
-  const reviews = useSelector(selector.getReviews);
-  const nearestAccommodations = useSelector(selector.getNearbyOffers);
+  const accommodation = useSelector(selectorProperty.getProperty);
+  const reviews = useSelector(selectorProperty.getReviews);
+  const nearestAccommodations = useSelector(selectorProperty.getNearbyOffers);
 
   if (isCheckedAuth(authorizationStatus) || !isPropertyLoaded || !accommodation) {
     return(
@@ -57,7 +61,7 @@ function Property (): JSX.Element {
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium ? <div className="property__mark"><span>Premium</span></div> : ''}
-              <PropertyContent accommodation={accommodation}/>
+              <PropertyContent />
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews &middot;

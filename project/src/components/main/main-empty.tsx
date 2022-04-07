@@ -1,7 +1,8 @@
-import { Cities } from '../../const';
+import { useSelector } from 'react-redux';
+import * as selector from '../../store/data-offers/offers-selector';
 
-function MainEmpty (props: {cityName: Cities }): JSX.Element {
-  const {cityName} = props;
+function MainEmpty (): JSX.Element {
+  const cityName = useSelector(selector.getCurrentCity);
 
   return(
     <div className="cities__places-container cities__places-container--empty container">
