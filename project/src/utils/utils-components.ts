@@ -1,7 +1,6 @@
 import { DivIcon, Map, Marker } from 'leaflet';
 import { AuthorizationStatus, Cities, ErrorMessageContentPassword, HUNDRED, SortingLabel, STARS_NUMBER, STAR_STEP, TEN } from '../const';
 import { SingleOffer } from '../types/types';
-import memoize from 'proxy-memoize';
 
 export const getStarRating = (rating: number): number => {
   const percentageValue = Math.round(rating*TEN/STARS_NUMBER)*TEN;
@@ -95,12 +94,11 @@ export const isErrorInPassword = pipePasswordFunctions(
 
 export const cityList =  Object.values(Cities);
 
-export const filterFavoritesByCity = memoize(
+export const filterFavoritesByCity =
   (favorites: SingleOffer[]): Array<[Cities, SingleOffer[]]> => cityList.map((town) => {
     const filtratedCity = favorites.filter((offer) => offer.city.name === town);
     return filtratedCity && [town, filtratedCity];
   },
-  ),
-);
+  );
 
 export const findOfferIntoOffers = (dataToCheck: SingleOffer[], id: number) => dataToCheck.find((line) => line.id === id);

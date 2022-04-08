@@ -166,3 +166,20 @@ export enum FavoriteCondition {
   Add = 1,
   Remove = 0,
 }
+
+export const ConstantForMocks = {
+  CoordinatesMin: 50,
+  CoordinatesMax: 55,
+  CoordinatesPrecision: 0.00001,
+  CoordinatesZoomMin: 5,
+  CoordinatesZoomMax: 10,
+  PeopleNumber: 10,
+  PriceMin: 10,
+  PriceMax: 550,
+  RatingMin: 1,
+  RatingMax: 5,
+  RatingPrecision: 0.1,
+  TitleWordsNumber: 3,
+  SentenceLength: 20,
+  ArraySize: 8,
+};

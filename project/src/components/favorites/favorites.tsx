@@ -4,7 +4,7 @@ import { LoadingStatus, LogoPosition } from '../../const';
 import { fetchFavoritesAction } from '../../store/data-favorites/data-favorites';
 import * as selectorFavorites from '../../store/data-favorites/favorite-selector';
 import { clearListOffers } from '../../store/data-offers/data-offers';
-import { clearProperty } from '../../store/data-property/data-property';
+import { setProperty } from '../../store/data-property/data-property';
 import * as selectorUser from '../../store/data-user/user-selector';
 import { isCheckedAuth } from '../../utils/utils-components';
 import Header from '../general/header';
@@ -31,7 +31,7 @@ function Favorites (): JSX.Element {
 
   const cleanDataForFavoriteLogics = () => {
     dispatch(clearListOffers());
-    dispatch(clearProperty());
+    dispatch(setProperty(null));
   };
 
   cleanDataForFavoriteLogics();

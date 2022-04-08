@@ -1,8 +1,8 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoutes, LogoPosition } from '../../const';
-import { logoutAction } from '../../store/api-actions';
+import { fetchUserDataAction, logoutAction } from '../../store/api-actions';
 import * as selector from '../../store/data-user/user-selector';
 import Logo from './logo';
 
@@ -17,6 +17,10 @@ function Header(props: HeaderProps): JSX.Element {
   const userData = useSelector(selector.getUserInfo);
   const location = useLocation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserDataAction());
+  }, [isAuthorized, dispatch]);
 
   const handleLogoClick = (evt: MouseEvent<HTMLAnchorElement>) =>{
     dispatch(logoutAction());
