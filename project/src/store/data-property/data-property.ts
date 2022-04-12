@@ -80,7 +80,6 @@ export const fetchUserReviewAction = createAsyncThunk<void, UserReviewType, {
   },
 );
 
-
 export const dataProperty = createSlice({
   name: NameSpace.DataProperty,
   initialState,
