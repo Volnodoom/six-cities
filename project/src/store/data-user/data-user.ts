@@ -28,4 +28,9 @@ export const dataUser = createSlice({
   },
 });
 
-export const {requireAuthorization, userInformation, setErrorUser, setLoadingUserStatus} = dataUser.actions;
+export const {
+  requireAuthorization,
+  userInformation,
+  setErrorUser,
+  setLoadingUserStatus,
+} = dataUser.actions;

@@ -7,6 +7,7 @@ import { dropToken, saveToken } from '../services/token';
 import { AppDispatch, State } from '../types/state';
 import { AuthData, RawUserData, UserData } from '../types/user-info-type';
 import {  redirectToRoute } from './action';
+import { setErrorFavorites } from './data-favorites/data-favorites';
 import { setErrorOffers } from './data-offers/data-offers';
 import { setErrorProperty } from './data-property/data-property';
 import { requireAuthorization, setErrorUser, setLoadingUserStatus, userInformation } from './data-user/data-user';
@@ -22,7 +23,7 @@ export const clearErrorAction = createAsyncThunk<void, void, {
         dispatch(setErrorUser(''));
         dispatch(setErrorOffers(''));
         dispatch(setErrorProperty(''));
-        dispatch(setErrorProperty(''));
+        dispatch(setErrorFavorites(''));
       },
       TIMEOUT_SHOW_ERROR,
     );

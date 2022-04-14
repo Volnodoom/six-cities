@@ -113,7 +113,7 @@ export enum MapClassName {
   Property = 'property__map',
 }
 
-export enum HTTP_CODE {
+export enum ServerResponse {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
@@ -182,4 +182,11 @@ export const ConstantForMocks = {
   TitleWordsNumber: 3,
   SentenceLength: 20,
   ArraySize: 8,
+  TokenLength: 25,
+  ErrorLine: 1,
+  UnknownAction: {type: 'UNKNOWN_ACTION'},
+  RequestFulfilled: 200,
+  RequestUnauthorized: 401,
+  RequestBadRequest: 400,
+  LogoutFulfilled: 204,
 };
