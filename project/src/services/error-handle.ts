@@ -1,6 +1,6 @@
 import { ErrorType } from '../types/error-types';
 import request from 'axios';
-import { AppRoutes, HTTP_CODE, LoadingStatus, NO_CONNECTION, NO_CONNECTION_MESSAGE } from '../const';
+import { AppRoutes, ServerResponse, LoadingStatus, NO_CONNECTION, NO_CONNECTION_MESSAGE } from '../const';
 import { store } from '../store';
 import { clearErrorAction } from '../store/api-actions';
 import { setErrorUser } from '../store/data-user/data-user';
@@ -37,13 +37,13 @@ export const errorHandle = (error: ErrorType): void => {
 
   if (response) {
     switch (response.status) {
-      case HTTP_CODE.BAD_REQUEST:
+      case ServerResponse.BAD_REQUEST:
         handleError(response.data.error);
         break;
-      case HTTP_CODE.UNAUTHORIZED:
+      case ServerResponse.UNAUTHORIZED:
         handleError(response.data.error);
         break;
-      case HTTP_CODE.NOT_FOUND:
+      case ServerResponse.NOT_FOUND:
         handleError(response.data.error);
         store.dispatch(redirectToRoute(AppRoutes.NotAvailable));
         break;

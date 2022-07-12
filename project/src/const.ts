@@ -8,7 +8,7 @@ export const LIMITED_NUMBER_OF_NEAREST_ACCOMMODATIONS = 3;
 export const DATE_TIME_FORMAT_USA_STYLE = 'en-US';
 export const PIN_ON_MAP_SIZE = [28, 40];
 export const PIN_ON_MAP_ANCHOR = [14, 40];
-export const BACKEND_URL = 'https://9.react.pages.academy/six-cities';
+export const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 export const REQUEST_TIMEOUT = 5000;
 export const TIMEOUT_SHOW_ERROR = 3000;
 export const AUTH_TOKEN_KEY_NAME = 'guess-six-sites-token';
@@ -113,7 +113,7 @@ export enum MapClassName {
   Property = 'property__map',
 }
 
-export enum HTTP_CODE {
+export enum ServerResponse {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,

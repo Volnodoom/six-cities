@@ -4,7 +4,8 @@ import { LoadingStatus, LogoPosition } from '../../const';
 import { fetchFavoritesAction } from '../../store/data-favorites/data-favorites';
 import * as selectorFavorites from '../../store/data-favorites/favorite-selector';
 import { clearListOffers } from '../../store/data-offers/data-offers';
-import { clearProperty } from '../../store/data-property/data-property';
+import * as selectorOffers from '../../store/data-offers/offers-selector';
+import { setProperty } from '../../store/data-property/data-property';
 import * as selectorUser from '../../store/data-user/user-selector';
 import { isCheckedAuth } from '../../utils/utils-components';
 import Header from '../general/header';
@@ -18,6 +19,7 @@ function Favorites (): JSX.Element {
   const favoritesOffers = useSelector(selectorFavorites.getFavorites);
   const isFavoriteLoaded = useSelector(selectorFavorites.getFavoriteLoadingStatus) === LoadingStatus.Succeeded;
   const authorizationStatus = useSelector(selectorUser.getAuthorizationStatus);
+  const listOffers = useSelector(selectorOffers.getOffers);
 
   useEffect(() => {
     dispatch(fetchFavoritesAction());
@@ -30,8 +32,10 @@ function Favorites (): JSX.Element {
   }
 
   const cleanDataForFavoriteLogics = () => {
-    dispatch(clearListOffers());
-    dispatch(clearProperty());
+    if(listOffers.length > 0) {
+      dispatch(clearListOffers());
+    }
+    dispatch(setProperty(null));
   };
 
   cleanDataForFavoriteLogics();

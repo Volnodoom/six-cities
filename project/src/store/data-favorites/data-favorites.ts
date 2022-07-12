@@ -62,7 +62,7 @@ export const postFavoriteAction = createAsyncThunk<void, number, {
         if (offerListData.length > 0) {
           dispatch(updateFavoriteInOffers(id));
         } else if (propertyData) {
-          dispatch(updateFavoriteInProperty(id));
+          dispatch(updateFavoriteInProperty());
         } else if (offerListData.length === 0 && propertyData === null) {
           const newFavorites = favoritesData.filter((line) => line.id !== id);
           if(newFavorites) {
